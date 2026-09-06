@@ -154,6 +154,8 @@ td .note{color:var(--muted);font-size:12px;font-weight:400}
 .arch-figs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
 .arch-figs figure{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0}
 .arch-figs img{width:100%;height:auto;border-radius:8px;display:block}
+.arch-live{display:inline-block;margin-top:10px;font-size:12px;color:#4f8cff;text-decoration:none;font-weight:600;border:1px solid #4f8cff33;padding:5px 12px;border-radius:999px;background:#4f8cff0d}
+.arch-live:hover{background:#4f8cff1a}
 .arch-figs figcaption{font-size:11.5px;color:var(--muted);margin-top:9px;line-height:1.6;text-align:center}
 @media(max-width:860px){
   .arch-figs{grid-template-columns:1fr}
@@ -437,7 +439,8 @@ footer a:hover{text-decoration:underline}
       </table>
     </div>
     <div class="arch-figs">
-      <figure><img src="assets/arch_tech_pro.png" alt="DuckMate 大鸭技术架构总览（专业版）" loading="lazy"><figcaption>图 1 · 技术架构总览（专业版）：五层软硬件栈 + RL 训练闭环</figcaption></figure>
+      <figure><img src="assets/arch_tech_pro.png" alt="DuckMate 大鸭技术架构总览（专业版）" loading="lazy"><figcaption>图 1 · 技术架构总览（专业版）：五层软硬件栈 + RL 训练闭环</figcaption>
+      <a class="arch-live" href="architecture.html" target="_blank" rel="noopener">▶ 可交互架构图（缩放 · 聚焦 · 主题切换）</a></figure>
       <figure><img src="assets/arch_tech_eli5.png" alt="DuckMate 大鸭技术架构（说人话版）" loading="lazy"><figcaption>图 2 · 说人话版：给共创伙伴/早期用户的非技术图解</figcaption></figure>
     </div>
   </div>
