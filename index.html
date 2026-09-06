@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=5.0">
+<meta name="description" content="DuckMate 大鸭 — 42cm 开源双足机器人鸭。ODM 国产化降本 + RL 踢球技能 + AI 对话，中国 C 端 AI 原生桌面硬件。">
+<meta property="og:title" content="DuckMate 大鸭 — 会踢球的 AI 机器人鸭">
+<meta property="og:description" content="42cm 开源双足机器人鸭 · Open Duck Mini v2 国产化 · RL 踢球技能 · Apache-2.0">
+<meta property="og:url" content="https://jasoneip01-pixel.github.io/duckmate/">
+<meta property="og:type" content="website">
+<title>DuckMate 大鸭 — 会踢球的 AI 机器人鸭 | M0 共创会准备中</title>
+<style>
+:root{
+  --bg:#0a0e16; --panel:#101725; --panel2:#182136;
+  --text:#e6ecf5; --muted:#8b9bb4; --line:rgba(140,180,255,.12);
+  --duck:#ffb347; --duck2:#ff8c42; --accent:#4dd0e1; --blue:#7aa5ff; --green:#4ade80; --purple:#b79bff;
+  --max-w:1100px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 8%,rgba(255,179,71,.05) 0%,transparent 45%),
+    radial-gradient(ellipse at 85% 55%,rgba(122,165,255,.05) 0%,transparent 45%),
+    var(--bg);
+  color:var(--text);font-size:15px;line-height:1.75;
+}
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,14,22,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);padding:10px 0;
+}
+nav .inner{
+  max-width:var(--max-w);margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;
+}
+nav .brand{font-size:16px;font-weight:800;display:flex;align-items:center;gap:7px;letter-spacing:.2px}
+nav .brand .duck{font-size:19px}
+nav .brand em{font-style:normal;color:var(--duck)}
+nav .brand .ver{font-size:10px;color:var(--muted);background:var(--panel2);padding:2px 7px;border-radius:5px;font-weight:600}
+nav .links{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+nav .links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .12s}
+nav .links a:hover{color:var(--text)}
+.inner{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+section{padding:72px 0}
+section.alt{background:rgba(255,255,255,.015);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+h2{font-size:27px;font-weight:800;margin-bottom:10px;letter-spacing:-.3px}
+h2 .k{color:var(--duck)}
+.sec-sub{color:var(--muted);font-size:14px;margin-bottom:30px;max-width:640px}
+h3{font-size:17px;font-weight:700;margin-bottom:10px}
+p{color:var(--muted);margin-bottom:12px}
+p strong{color:var(--text)}
+/* hero */
+.hero{padding:88px 0 64px;text-align:center;position:relative;overflow:hidden}
+.hero .duck-emoji{font-size:72px;line-height:1;margin-bottom:18px;display:block;filter:drop-shadow(0 8px 24px rgba(255,179,71,.25))}
+.hero h1{font-size:46px;font-weight:900;letter-spacing:-1.2px;margin-bottom:14px;line-height:1.18}
+.hero h1 .hl{background:linear-gradient(120deg,var(--duck) 0%,var(--duck2) 55%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .subtitle{font-size:17px;color:var(--muted);max-width:640px;margin:0 auto 30px}
+.hero .subtitle strong{color:var(--text)}
+.hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:all .15s;cursor:pointer;border:none}
+.btn-p{background:linear-gradient(120deg,var(--duck),var(--duck2));color:#1a1206}
+.btn-p:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-s{background:var(--panel);color:var(--text);border:1px solid var(--line)}
+.btn-s:hover{border-color:rgba(140,180,255,.3);background:var(--panel2)}
+.stats-row{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+.stat-item{text-align:center}
+.stat-item .num{font-size:34px;font-weight:900;color:var(--duck);letter-spacing:-.5px}
+.stat-item .num.sm{font-size:24px;line-height:1.3}
+.stat-item .label{font-size:12px;color:var(--muted);margin-top:3px}
+/* 三段 why */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.why-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:26px 22px;transition:all .2s}
+.why-card:hover{border-color:rgba(140,180,255,.22);transform:translateY(-2px)}
+.why-card .no{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:10px}
+.why-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.why-card p{font-size:13px;line-height:1.7;margin:0}
+/* 能力网格 */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:22px;transition:all .2s}
+.feat-card:hover{border-color:rgba(140,180,255,.2)}
+.feat-card .icon{font-size:23px;margin-bottom:10px}
+.feat-card h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:12.5px;line-height:1.7;margin:0}
+.feat-card .tag{display:inline-block;margin-top:9px;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:700}
+.tag.ready{background:rgba(74,222,128,.1);color:var(--green)}
+.tag.wip{background:rgba(255,179,71,.1);color:var(--duck)}
+.tag.todo{background:rgba(139,155,180,.12);color:var(--muted)}
+/* 规格表 */
+.table-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--panel)}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:11px;font-weight:700;color:var(--muted);background:var(--panel2);letter-spacing:.3px}
+tbody tr:last-child td{border-bottom:none}
+tr:hover{background:rgba(255,255,255,.02)}
+td:first-child{font-weight:600;color:var(--text);white-space:nowrap}
+td .note{color:var(--muted);font-size:12px;font-weight:400}
+/* 路线 */
+.road{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+.road-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 14px;position:relative;overflow:hidden}
+.road-card .dot{position:absolute;top:0;left:0;right:0;height:3px}
+.road-card .m{font-size:13px;font-weight:800;margin-bottom:4px}
+.road-card .d{font-size:11px;color:var(--muted);margin-bottom:8px}
+.road-card .g{font-size:11px;line-height:1.6}
+.road-card .g b{display:block;margin-bottom:2px}
+/* 商业层 */
+.biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.biz-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:22px;position:relative}
+.biz-card .l{position:absolute;top:16px;right:16px;font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px}
+.biz-card h4{font-size:15px;font-weight:800;margin-bottom:4px}
+.biz-card .price{font-size:20px;font-weight:900;color:var(--duck);margin-bottom:10px}
+.biz-card p{font-size:12.5px;line-height:1.7;margin:0}
+/* 团队 */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.team-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
+.team-card .av{font-size:28px;margin-bottom:8px}
+.team-card h4{font-size:14px;font-weight:700}
+.team-card .role{font-size:11px;color:var(--duck);font-weight:700;margin:3px 0 7px}
+.team-card p{font-size:11.5px;line-height:1.6;margin:0}
+/* FAQ */
+.faq-item{margin-bottom:18px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:18px 20px}
+.faq-item .q{font-weight:700;color:var(--text);font-size:14.5px;margin-bottom:5px}
+.faq-item .a{color:var(--muted);font-size:13.5px;line-height:1.75}
+/* 架构栈 */
+.arch-stack{display:flex;flex-direction:column;gap:8px;margin:8px 0 14px}
+.arch-row{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--duck);border-radius:10px;padding:12px 16px;transition:all .15s}
+.arch-row:hover{border-color:rgba(140,180,255,.25)}
+.arch-row:nth-child(1){border-left-color:var(--duck)}
+.arch-row:nth-child(2){border-left-color:var(--accent)}
+.arch-row:nth-child(3){border-left-color:var(--blue)}
+.arch-row:nth-child(4){border-left-color:var(--purple)}
+.arch-row:nth-child(5){border-left-color:var(--green)}
+.arch-row:nth-child(6){border-left-color:var(--muted)}
+.arch-l{display:flex;align-items:center;gap:14px;min-width:0}
+.arch-n{font-size:17px;font-weight:900;color:var(--duck);opacity:.9;flex-shrink:0}
+.arch-l b{display:block;font-size:14.5px;font-weight:800}
+.arch-l .sub{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:1px}
+.arch-r{display:flex;gap:7px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.tag-ready{display:inline-block;margin-top:0;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:700;background:rgba(122,165,255,.12);color:var(--blue)}
+.tag-move{display:inline-block;margin-top:0;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:700;background:rgba(183,155,255,.12);color:var(--purple)}
+.arch-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 4px}
+.arch-note{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:16px}
+.arch-note .ic{font-size:20px}
+.arch-note p{font-size:12.5px;line-height:1.7;margin:7px 0 0}
+.arch-note p strong{color:var(--text)}
+.pipe{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
+.pipe-step{flex:1;min-width:110px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px;text-align:center}
+.pipe-step b{display:block;font-size:13px;font-weight:700}
+.pipe-step span{display:block;font-size:10.5px;color:var(--muted);margin-top:2px}
+.pipe-arr{color:var(--duck);font-weight:900;font-size:17px;flex-shrink:0}
+.arch-figs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.arch-figs figure{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0}
+.arch-figs img{width:100%;height:auto;border-radius:8px;display:block}
+.arch-figs figcaption{font-size:11.5px;color:var(--muted);margin-top:9px;line-height:1.6;text-align:center}
+@media(max-width:860px){
+  .arch-figs{grid-template-columns:1fr}
+  .arch-notes{grid-template-columns:1fr}
+  .arch-row{flex-direction:column;align-items:flex-start}
+  .arch-r{justify-content:flex-start}
+}
+footer{border-top:1px solid var(--line);padding:38px 0;text-align:center;color:var(--muted);font-size:12.5px}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:860px){
+  .feat-grid,.why-grid,.biz-grid{grid-template-columns:1fr 1fr}
+  .road{grid-template-columns:repeat(3,1fr)}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:34px}
+  .hero .subtitle{font-size:15px}
+  .stats-row{gap:22px}
+  .stat-item .num{font-size:27px}
+}
+@media(max-width:500px){
+  .feat-grid,.why-grid,.biz-grid,.team-grid{grid-template-columns:1fr}
+  .road{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:26px}
+  .hero .duck-emoji{font-size:54px}
+  .stat-item .num{font-size:23px}
+  h2{font-size:22px}
+  nav .links{gap:11px;font-size:11px}
+  section{padding:52px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="brand"><span class="duck">🦆</span>Duck<em>Mate</em> <span class="ver">大鸭路线 v3.0</span></div>
+    <div class="links">
+      <a href="#market">市场</a>
+      <a href="#demand">需求</a>
+      <a href="#competition">竞品</a>
+      <a href="#arch">架构</a>
+      <a href="#specs">规格</a>
+      <a href="#roadmap">路线</a>
+      <a href="#biz">商业</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="inner">
+    <span class="duck-emoji">🦆</span>
+    <h1>DuckMate · <span class="hl">会踢球的 AI 机器人鸭</span></h1>
+    <p class="subtitle">42cm 开源双足机器人鸭。基于 <strong>Open Duck Mini v2</strong> 国产化再造，RL 训练踢球技能 + AI 对话，做中国 C 端第一台 <strong>AI 原生桌面硬件</strong>。不是玩具，是能跟你玩、陪你学、亲眼看着它长大的伙伴。</p>
+    <div class="ctas">
+      <a href="#market" class="btn btn-p">📊 市场与竞品</a>
+      <a href="#roadmap" class="btn btn-s">🚀 项目进展</a>
+      <a href="#specs" class="btn btn-s">📐 技术规格</a>
+      <a href="#faq" class="btn btn-s">❓ 常见问题</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="num">42</div><div class="label">cm 身高（ODM v2）</div></div>
+      <div class="stat-item"><div class="num sm">14×</div><div class="label">STS3215 国产舵机</div></div>
+      <div class="stat-item"><div class="num sm">¥1.5-1.8k</div><div class="label">量产目标成本</div></div>
+      <div class="stat-item"><div class="num sm">Apache-2.0</div><div class="label">CAD/BOM/训练栈全开源</div></div>
+      <div class="stat-item"><div class="num">M0</div><div class="label">共创会准备中</div></div>
+      <div class="stat-item"><div class="num sm">2027-09</div><div class="label">M4 交付目标</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="why">
+  <div class="inner">
+    <h2><span class="k">◆</span> 为什么做 DuckMate</h2>
+    <p class="sec-sub">第一性拆解：桌面机器人是「玩具」，不是「AI 原生设备」。消费级双足机器人在中国是空白。</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="no">PROBLEM 01</div>
+        <h4>市场已验证，但没人做中国版</h4>
+        <p>海外 MicroDuck（25cm 开源鸭）$499 预售爆单，Q4 出货。但 25cm 方案进口舵机 15 只 ¥4,500+，做不了中国 C 端（¥1,999-2,599 定价结构性亏损）。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">SOLUTION 02</div>
+        <h4>大鸭路线：更大身体 + 国产化</h4>
+        <p>Open Duck Mini v2（42cm，同工程师同源）→ 14 只飞特 STS3215（¥60-70/只）国产化，量产整机 ¥1,500-1,800 目标。尺寸升级 = 扭矩 3 倍 = 能踢球。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">EDGE 03</div>
+        <h4>差异化：踢球 + AI 素养 + 开源生态</h4>
+        <p>RL 训练踢球技能（拳头差异化）、中文 AI 素养教育内容、Apache-2.0 全开源 + 同济教程生态，打样成本趋零，组装路线验证过。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="market" class="alt">
+  <div class="inner">
+    <h2><span class="k">◆</span> 市场分析</h2>
+    <p class="sec-sub">消费机器人的胜利公式 = 平价硬件 × 开源生态 × 社区内容。MicroDuck 已验证，Anki 已证伪（闭源单打，公开报道累计融资超 $2 亿后倒闭）。DuckMate 完全沿胜利公式设计。</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="no">GLOBAL 01</div>
+        <h4>全球：开源时刻已到</h4>
+        <p><strong>MicroDuck $399 预售 2026-08-27 开，爆单至 Shopify UI 限额</strong>（官方博客原话，含 HF 联创 Thomas Wolf）。同门 Reachy Mini 已售 10,000+ 台。发布 4 天社区训出翻筋斗/霹雳舞/激光追踪（社区实测）。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">CHINA 02</div>
+        <h4>中国：供给真空</h4>
+        <p>MicroDuck 首发仅北美/欧洲/英国，圣诞前发货。<strong>中国用户需 ¥3,500+ 税运且 2027 年才到手</strong>（官网 FAQ 核验）。42cm 大鸭 = 无官方对手、无复刻量产、中文内容生态刚起步的空白位。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">PLAY 03</div>
+        <h4>我们站的位置</h4>
+        <p>把「社群能自装的套件」升级为「开箱即用的品牌整机 + 内容体系」，正是 MicroDuck 在欧美所做的事的 <strong>中国 + 大尺寸版</strong>。需求真实且冲动，不凭空造需求。</p>
+      </div>
+    </div>
+    <h3 style="margin-top:34px">市场规模推算（自下而上，方法披露，非第三方报告）</h3>
+    <div class="biz-grid" style="margin-top:14px">
+      <div class="biz-card"><span class="l" style="background:rgba(255,179,71,.12);color:var(--duck)">TAM</span><h4>中国教育陪伴机器人</h4><div class="price">≈¥6-9 亿/年</div><p>3 年视角。目标城市中产家庭 3,000 万户 × 3 年渗透 0.1% ≈ 3 万台/年。推算框架，以渠道访谈校准。</p></div>
+      <div class="biz-card"><span class="l" style="background:rgba(122,165,255,.12);color:var(--blue)">SAM</span><h4>可触达市场</h4><div class="price">¥1-3.5 亿/年</div><p>极客 + 线上直营 + 机构试探可触达 ≈ 5,000-15,000 台/年。渠道：开源社区冷启动 + 直营。</p></div>
+      <div class="biz-card"><span class="l" style="background:rgba(74,222,128,.12);color:var(--green)">SOM</span><h4>3 年保守目标</h4><div class="price">¥700-1,300 万/年</div><p>3,000-5,000 台/年。<strong>验证性规模</strong>，不为份额叙事融资。真实规模以 M1 预售数据校准。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demand">
+  <div class="inner">
+    <h2><span class="k">◆</span> 需求分析：谁最愿意为「会走路的 AI」付钱</h2>
+    <p class="sec-sub">客户第一性重问：不是「焦虑的家长」（决策慢、红海、品牌冷启动难），而是「冲动买」的极客 + 机构教具需求。但「有需求」≠「能进入」：学校/特教结构性不可进入，不占版面。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>路径</th><th>客户</th><th>证据等级</th><th>角色</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>L1 极客/创客</td><td>开发者</td><td><span class="tag ready">✅✅ 已验证</span> MicroDuck 爆单 = 这群人；中国真空（税运 ¥3,500+/2027 到手）</td><td><strong>第一战场</strong>：验证 + 现金 + 口碑</td></tr>
+          <tr><td>L2 C 端家庭</td><td>家长（6-14 岁）</td><td><span class="tag wip">🟡 待验证</span> AI 素养是趋势，付费意愿 M1 访谈验证</td><td><strong>主战场</strong>：品牌 + 订阅（内容先行）</td></tr>
+          <tr><td>机构试探</td><td>编程机构</td><td><span class="tag wip">🟡 推断</span> 需真 AI 教具，3 家免费试用验证</td><td>C 端放大器：机构买 → 家长看到 → C 端转化</td></tr>
+          <tr><td>学校 K12 / 特教</td><td>N/A</td><td><span class="tag todo">❌ 不做</span> 招投标资质/医疗准入/回款 = 上市公司级投入</td><td>结构性不可进入，明确放弃</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="why-grid" style="margin-top:16px">
+      <div class="why-card">
+        <div class="no">WHY L1 FIRST</div>
+        <h4>为什么极客是第一战场</h4>
+        <p>MicroDuck 8/27 爆单人群就是极客（官方博客一手）。决策快、毛利高、品牌放大器（发烧友 → KOL → 大众）。<strong>唯一有现成证据的入口</strong>。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">WHY L2 MAIN</div>
+        <h4>为什么 C 端是主战场</h4>
+        <p>中国家庭付费意愿<strong>未验证</strong>（M1 必测），需内容体系 + 品牌信任长线投入。C 端品牌从极客口碑长出来，比广告便宜。</p>
+      </div>
+      <div class="why-card">
+        <div class="no">DEMAND 03</div>
+        <h4>需求不是「会动的 iPad」</h4>
+        <p>内容金字塔只承载屏幕给不了的三种具身独有：物理因果、真实责任、身体性惊喜。能上屏幕的内容不上机器人（内容方法论 4 轮审计验证）。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competition" class="alt">
+  <div class="inner">
+    <h2><span class="k">◆</span> 竞品分析：不撞 MicroDuck，做尺寸升级互补品</h2>
+    <p class="sec-sub">克隆同尺寸 = 正面撞车必输（$399 官方 + 复刻党规模化成本更低）。42cm ODM 与 MicroDuck 是<strong>同一位工程师 Antoine Pirrone（Pollen R&D）</strong>的作品，站在同源开源上做更大版本，训练方法论一脉相承。</p>
+    <h3>DuckMate vs MicroDuck</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>维度</th><th>MicroDuck</th><th>DuckMate（大鸭）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>定位</td><td>开发者/创客玩具（25cm）</td><td>教育（AI 素养）+ 极客双线（42cm）</td></tr>
+          <tr><td>语言</td><td>英文</td><td>中文优先</td></tr>
+          <tr><td>内容</td><td>社区技能</td><td>内容金字塔四层（人格/互动/学习/创造）</td></tr>
+          <tr><td>渠道</td><td>欧美直营</td><td>中国线上 + 极客社区（教育渠道仅试探）</td></tr>
+          <tr><td>硬件</td><td>欧洲供应链（XL330 进口）</td><td>国产供应链（STS3215，成本 -30-50%）</td></tr>
+          <tr><td>客户</td><td>单层（创客）</td><td>分层：极客第一战场 → C 端主战场 → 机构试探</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 style="margin-top:30px">五方竞争格局</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>玩家</th><th>定位</th><th>价位</th><th>弱点（我们的机会）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pollen MicroDuck</td><td>欧美创客</td><td>$399</td><td>无中国、非教育、硬件闭源迭代慢</td></tr>
+          <tr><td>复刻党（fanhao375 等）</td><td>图纸社区</td><td>无商品</td><td>无量产、无品牌、无售后</td></tr>
+          <tr><td>宇树</td><td>人形/四足</td><td>¥数千-数万</td><td>非玩具价位、非儿童</td></tr>
+          <tr><td>教育机器人（积木/轮式）</td><td>编程教育</td><td>¥500-2,000</td><td>无双足、无真 RL 策略、红海同质化</td></tr>
+          <tr><td>Anki（已停）</td><td>闭源玩具</td><td>$180+</td><td>死亡路径教材：闭源 + 自建内容</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;font-size:13px"><strong>壁垒构建顺序</strong>：供应链成本（友A/B，即刻）→ IP 外观与模具（友B，6 个月）→ 内容金字塔（Sky 方法论 + 12 课素材库，12 个月）→ 社区生态（24 个月）。内容叙事刻意避开「编程」红海词，主打 <strong>「AI 素养」</strong>：真 AI 双足是唯一能「演」AI 的教具。</p>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="inner">
+    <h2><span class="k">◆</span> 技术规格</h2>
+    <p class="sec-sub">数据实测/一手（MJCF 质量总和 / 国内复刻者实购价 / ODM 官方架构），推算项已标注。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>项目</th><th>规格</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>身高 / 重量</td><td>42cm / ~2.1kg</td><td>ODM v2 实测（MJCF 质量总和 2107g）</td></tr>
+          <tr><td>自由度</td><td>14 舵机</td><td>双腿 10 + 颈头 4</td></tr>
+          <tr><td>舵机</td><td>飞特 STS3215 × 14</td><td>国产串行总线舵机，¥60-70/只 <span class="note">（国内复刻者实购双源）</span></td></tr>
+          <tr><td>舵机扭矩</td><td>1.91 N·m（max 2.4）</td><td>3 倍于 25cm 版 XL330，能踢球能拿物</td></tr>
+          <tr><td>主控</td><td>树莓派级</td><td>ODM 官方架构，可国产替代</td></tr>
+          <tr><td>电池</td><td>2S/3S LiPo</td><td><span class="note">待 M0 确认</span></td></tr>
+          <tr><td>开源协议</td><td>Apache-2.0</td><td>图纸 / BOM / 训练栈全部公开</td></tr>
+          <tr><td>训练栈</td><td>mujoco_playground + JAX</td><td>Berkeley Humanoid 血统，standing 重训成本 &lt;$3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 style="margin-top:26px">软件 / 技能路线</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>能力</th><th>状态</th><th>交付窗口</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>站立（RL 训练）</td><td><span class="tag wip">M1 gate 训练中</span></td><td>2026-10</td></tr>
+          <tr><td>行走（joystick 策略）</td><td><span class="tag ready">官方已有</span></td><td>随整机</td></tr>
+          <tr><td>踢球（差异化技能）</td><td><span class="tag todo">重训中</span></td><td>2027-01 M2</td></tr>
+          <tr><td>AI 对话</td><td><span class="tag ready">架构就绪</span></td><td>随整机</td></tr>
+          <tr><td>技能市场</td><td><span class="tag todo">L3 平台</span></td><td>2027-03+</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="arch">
+  <div class="inner">
+    <h2><span class="k">◆</span> 产品架构：从身体到灵魂的六层栈 + RL 训练闭环</h2>
+    <p class="sec-sub">价值在灵魂，成本在身体。产品大部分价值不在硬件而在软件/内容/IP 层，只有 ⑤ 是硬件。MicroDuck 只做了策略+身体；我们用编排/认知/内容三层把「创客玩具」升级成「家庭 AI 伙伴」。</p>
+    <div class="arch-stack">
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">⑥</span><div><b>内容层</b><span class="sub">AI 素养课程：人格/互动/学习/创造四层金字塔</span></div></div><div class="arch-r"><span class="tag todo">定位拍板</span><span class="tag-ready">差异化收入引擎</span></div></div>
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">⑤</span><div><b>认知层</b><span class="sub">duck_vision 视觉 + LLM planner + 中文指挥（duck_commander）</span></div></div><div class="arch-r"><span class="tag ready">雏形已跑通</span></div></div>
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">④</span><div><b>行为编排层</b><span class="sub">orchestrator：7 原子 × 4 组合技能，技能 = ONNX + DSL 脚本 + 场景资产，热加载</span></div></div><div class="arch-r"><span class="tag ready">虚拟栈跑通</span><span class="tag-move">硬件无关可迁移</span></div></div>
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">③</span><div><b>策略层</b><span class="sub">走路 ONNX（ODM 现成）+ 踢球等技能 ODM Playground 重训</span></div></div><div class="arch-r"><span class="tag ready">走路现成</span><span class="tag wip">踢球重训中</span></div></div>
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">②</span><div><b>物理层</b><span class="sub">rustypot.feetech（1Mbps 总线，同库换协议）+ 树莓派主控 + IMU</span></div></div><div class="arch-r"><span class="tag ready">开源复用</span></div></div>
+      <div class="arch-row"><div class="arch-l"><span class="arch-n">①</span><div><b>身体层</b><span class="sub">ODM v2 结构 + 14×STS3215 国产舵机 + CAD/STL 开源（143 STL）</span></div></div><div class="arch-r"><span class="tag ready">开源 BOM</span><span class="tag-ready">友A/B 量产</span></div></div>
+    </div>
+    <div class="arch-notes">
+      <div class="arch-note"><span class="ic">🔄</span><p><strong>技能热加载</strong>：内容包 = 策略(ONNX) + DSL 行为脚本 + 场景资产，编排层热加载 → 新内容<strong>零固件改动</strong>，年龄标签（6-8/9-11/12-14）App 过滤，分龄是标签不是三套产品。</p></div>
+      <div class="arch-note"><span class="ic">🚚</span><p><strong>迁移路径</strong>：MicroDuck 虚拟栈（9 ONNX + orchestrator + 认知层）→ ODM 规格 = 换策略层 + 重训差异技能；编排/认知/内容层<strong>全部保留</strong>。接口适配即可，迁移工作量 = obs/action 维度映射。</p></div>
+      <div class="arch-note"><span class="ic">📺</span><p><strong>内容边界</strong>：能上屏幕的内容不上机器人（否则 = 会动的 iPad）。机器人只承载「具身独有」：物理因果、真实责任、身体性惊喜。</p></div>
+    </div>
+    <h3 style="margin-top:30px">RL 训练闭环（技能生产流水线）</h3>
+    <div class="pipe">
+      <div class="pipe-step"><b>参考动作</b><span>auto_waddle</span></div>
+      <div class="pipe-arr">→</div>
+      <div class="pipe-step"><b>多项式拟合</b><span>fit_poly</span></div>
+      <div class="pipe-arr">→</div>
+      <div class="pipe-step"><b>RL 训练</b><span>PPO · Open Duck Playground</span></div>
+      <div class="pipe-arr">→</div>
+      <div class="pipe-step"><b>ONNX 导出</b><span>策略文件</span></div>
+      <div class="pipe-arr">→</div>
+      <div class="pipe-step"><b>部署真机</b><span>sim2real</span></div>
+    </div>
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead>
+          <tr><th>环节</th><th>状态</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>走路策略</td><td><span class="tag ready">不重训</span></td><td>Playground 默认产出现成，省最大一块训练预算</td></tr>
+          <tr><td>技能重训（踢球等）</td><td><span class="tag wip">AutoDL 4090</span></td><td>microduck-rl-fork 方法论（宽窗验证/失败统计）整体迁移；MicroDuck 系单技能 4096 env 1-2h、$1-2 量级</td></tr>
+          <tr><td>训练成本台账</td><td><span class="tag ready">纪律沿用</span></td><td>每技能记录 GPU 时数/成本，沿用轨 B 纪律</td></tr>
+          <tr><td>M1 gate 验证</td><td><span class="tag wip">待跑</span></td><td>共创后第一周跑通一个最小重训技能（坐/起或挥手）作训练轨 gate，不验证不排产</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="arch-figs">
+      <figure><img src="assets/arch_tech_pro.png" alt="DuckMate 大鸭技术架构总览（专业版）" loading="lazy"><figcaption>图 1 · 技术架构总览（专业版）：五层软硬件栈 + RL 训练闭环</figcaption></figure>
+      <figure><img src="assets/arch_tech_eli5.png" alt="DuckMate 大鸭技术架构（说人话版）" loading="lazy"><figcaption>图 2 · 说人话版：给共创伙伴/早期用户的非技术图解</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="cap" class="alt">
+  <div class="inner">
+    <h2><span class="k">◆</span> 六张底牌</h2>
+    <p class="sec-sub">DuckMate 凭什么成立：每一张都有实测/一手证据支撑。</p>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="icon">🦆</div><h4>开源方案的实体化</h4><p>ODM 开源 1 年无人做成中国产品。同工程师同源 42cm 方案，组装路线有同济保姆级教程验证，打样成本趋零。</p><span class="tag ready">开源生态</span></div>
+      <div class="feat-card"><div class="icon">🇨🇳</div><h4>国产化降本</h4><p>14 只飞特 STS3215（¥60-70/只）替代进口 XL330（€45.76/个），单台舵机成本 ¥840-980 → 整机 ¥1,500-1,800。</p><span class="tag ready">供应链实价</span></div>
+      <div class="feat-card"><div class="icon">⚽</div><h4>RL 踢球技能</h4><p>拳头差异化。MuJoCo 仿真训练 → ONNX 部署真机，物理因果「说踢球它就踢飞」= 屏幕给不了的具身 AI 教育。</p><span class="tag wip">训练轨进行中</span></div>
+      <div class="feat-card"><div class="icon">🧠</div><h4>AI 对话大脑</h4><p>行为编排层（认知 + 技能库 + 编排器 + 视觉闭环）虚拟鸭栈已 80% 跑通，动作空间与 ODM 1:1 同构，迁移 ≈2-3 天。</p><span class="tag ready">编排层就绪</span></div>
+      <div class="feat-card"><div class="icon">🎓</div><h4>AI 素养内容金字塔</h4><p>3 性格包 + 3 游戏 + 3 课程点。只承载「具身独有」内容：物理因果、真实责任、身体性惊喜，不跟 iPad 抢屏幕课。</p><span class="tag wip">Sky 脚本中</span></div>
+      <div class="feat-card"><div class="icon">🔄</div><h4>技能市场 + OTA</h4><p>L3 商业模式预演：技能包/内容包热加载、版本更新、用户上传下载。硬件卖出只是开始，复购靠内容。</p><span class="tag todo">2027-03+</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="inner">
+    <h2><span class="k">◆</span> 里程碑路线 M0 → M4</h2>
+    <p class="sec-sub">每个里程碑有 Gate 验收，不过 Gate 不进入下一阶段。资金路径：M0-M2 原型 -¥180 万 → M3 预售回款 → M4 交付。</p>
+    <div class="road">
+      <div class="road-card"><div class="dot" style="background:var(--duck)"></div><div class="m">M0 共创会</div><div class="d">2026-09</div><div class="g"><b>三张报价单实填</b>友A PCB / 友B 模具 / 舵机批量价 · 共创书签署 · 设计 or 代工决策</div></div>
+      <div class="road-card"><div class="dot" style="background:var(--accent)"></div><div class="m">M1 验证</div><div class="d">2026-10</div><div class="g"><b>N=200 + 训练 gate</b>极客预售意向 ≥200 · standing 重训跑通 · 家长访谈 N=30 · 融资启动</div></div>
+      <div class="road-card"><div class="dot" style="background:var(--blue)"></div><div class="m">M2 原型</div><div class="d">2027-01</div><div class="g"><b>10 台可走</b>结构件组装 · 载板点亮 · 走路跑通 · 踢球重训 · 500h 耐久</div></div>
+      <div class="road-card"><div class="dot" style="background:var(--purple)"></div><div class="m">M3 预售</div><div class="d">2027-03</div><div class="g"><b>≥200 锁单</b>预售 500 台 · 注塑+EMS 量产爬坡 · 内容 1.0 打包</div></div>
+      <div class="road-card"><div class="dot" style="background:var(--green)"></div><div class="m">M4 交付</div><div class="d">2027-09</div><div class="g"><b>退货 &lt;5%</b>交付 + 内容 1.0 · 技能市场 MVP · 用户质量闭环</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="biz">
+  <div class="inner">
+    <h2><span class="k">◆</span> 商业模式：三层递进</h2>
+    <p class="sec-sub">极客验证 → 家庭普及 → 内容复购。天使轮 ¥300-500 万 / 出让 10-15%（用途细分待 Sky 拍板）。</p>
+    <div class="biz-grid">
+      <div class="biz-card"><span class="l" style="background:rgba(255,179,71,.12);color:var(--duck)">L1 · 现在</span><h4>极客整机 DuckMate</h4><div class="price">¥3,999-4,999</div><p>42cm 开发者版，预售验证中。早鸟 ¥3,999 限 200 台，¥500 意向金可退，编号铭牌 + 共创社群。</p></div>
+      <div class="biz-card"><span class="l" style="background:rgba(122,165,255,.12);color:var(--blue)">L2 · 2027</span><h4>家庭版（教育定位）</h4><div class="price">¥2,999-3,999</div><p>AI 素养教育场景：物理因果 + 真实责任 + 身体性惊喜。内容金字塔 3+3+3 随机器交付。</p></div>
+      <div class="biz-card"><span class="l" style="background:rgba(183,155,255,.12);color:var(--purple)">L3 · 2027-28</span><h4>技能市场 + OTA</h4><div class="price">订阅 ¥99/月</div><p>技能包/内容包持续下发，用户可上传技能。硬件毛利 31-42%，复购靠内容生态。</p></div>
+    </div>
+    <p style="margin-top:22px;font-size:13px"><strong>单位经济</strong>：量产成本 ¥1,500-1,800 → C 端盈利底线 &lt;¥1,800，毛利 31-42%。融资用途：内容生产 30-40% / 原型量产 30% / 团队运营 20-30% / 打样模具 10%（ODM 开源省 60-70% 打样费）。</p>
+  </div>
+</section>
+
+<section id="team" class="alt">
+  <div class="inner">
+    <h2><span class="k">◆</span> 团队</h2>
+    <p class="sec-sub">支付/资金/产品 16 年 + 供应链实控 + AI 全栈，能力互补无重叠。</p>
+    <div class="team-grid">
+      <div class="team-card"><div class="av">🧑‍💼</div><h4>李定（Sky）</h4><div class="role">创始人 · 产品/内容/融资</div><p>前字节 TikTok Shop 支付负责人 / 支付宝余额宝资金管理 / 华为项目财务。16 年支付+资金+产品。</p></div>
+      <div class="team-card"><div class="av">🔧</div><h4>友A</h4><div class="role">PCB 代工厂实控人</div><p>载板/PCBA 设计与量产。M0 已签约意向，三张报价单核心一方。</p></div>
+      <div class="team-card"><div class="av">🏭</div><h4>友B</h4><div class="role">精密模具实控人</div><p>结构件注塑模具 + 10 台原型组装 + IP 壳（鸭/恐龙/宠物）。M0 已签约意向。</p></div>
+      <div class="team-card"><div class="av">🦞</div><h4>Ariste</h4><div class="role">AI 智能体 · 技术/生态/文档</div><p>虚拟鸭行为栈（编排/训练/视觉）、训练轨执行、生态监测、全栈文档。能力边界诚实声明。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="inner">
+    <h2><span class="k">◆</span> FAQ</h2>
+    <div class="faq-item"><div class="q">为什么 42cm「大鸭」而不是 25cm MicroDuck？</div><div class="a">25cm 方案 15 只进口舵机要 ¥4,500+，C 端定价 ¥1,999-2,599 结构性亏损。42cm ODM 同工程师同源，14 只国产 STS3215 只要 ¥840-980，扭矩还大 3 倍，能踢球。成本结构和能力都赢。</div></div>
+    <div class="faq-item"><div class="q">开源协议怎么算？能用它做产品卖钱吗？</div><div class="a">Apache-2.0：全部图纸/BOM/训练栈公开，商用合规，可闭源衍生。开源生态 = 打样成本趋零 + 组装路线验证过（同济教程实测 ¥3,000 整机）。</div></div>
+    <div class="faq-item"><div class="q">「RL 踢球」是真的自己学会的吗？</div><div class="a">是。MuJoCo 仿真 + 强化学习训练策略 → 导出 ONNX → 部署真机。训练轨 M1 gate（standing 重训）已在 AutoDL 4090 执行，成本 &lt;¥10，踢球策略 2027-01 M2 交付。</div></div>
+    <div class="faq-item"><div class="q">跟普通 AI 玩具/机器人课有什么区别？</div><div class="a">孩子要的不是内容，是活的回应。DuckMate 只承载屏幕给不了的三种「具身独有」：物理因果（说踢球它就踢飞）、真实责任（会摔倒要充电会记住你）、身体性惊喜（亲眼看到它长大）。</div></div>
+    <div class="faq-item"><div class="q">现在能做什么？怎么参与？</div><div class="a">M0 共创会准备中（三张报价单已就绪，日期待 Sky 定）。极客可登记预售意向（¥500 可退），早鸟 ¥3,999 锁定 + 编号铭牌 + 共创社群。进度实时更新在 Robot 研究群。</div></div>
+    <div class="faq-item"><div class="q">最大的风险是什么？</div><div class="a">预售不及 N=200（M1 gate 不通过则止步）。缓解：极客社区预热 + 早鸟价 + 共创社群锁意向；真机舵机损坏风险靠「虚拟训练成熟再上真机」规避。完整风险清单见项目管理文档。</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="inner">
+    <p>DuckMate 大鸭路线 v3.0 · Apache-2.0 · 广州 · 详细 BP v3.0 备索</p>
+    <p style="font-size:11px;margin-top:6px">42cm 开源双足机器人鸭 · RL 踢球 + AI 对话 · M0 共创会准备中 · 数据一手可追溯</p>
+  </div>
+</footer>
+
+</body>
+</html>
