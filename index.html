@@ -88,6 +88,7 @@ p strong{color:var(--text)}
 .tag.ready{background:rgba(74,222,128,.1);color:var(--green)}
 .tag.wip{background:rgba(255,179,71,.1);color:var(--duck)}
 .tag.todo{background:rgba(139,155,180,.12);color:var(--muted)}
+.tag.warn{background:rgba(248,113,113,.12);color:#f87171}
 /* 规格表 */
 .table-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
 table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--panel)}
@@ -188,7 +189,7 @@ footer a:hover{text-decoration:underline}
 
 <nav>
   <div class="inner">
-    <div class="brand"><span class="duck">🦆</span>Duck<em>Mate</em> <span class="ver">大鸭路线 v3.0</span></div>
+    <div class="brand"><span class="duck">🦆</span>Duck<em>Mate</em> <span class="ver">大鸭路线 v3.1</span></div>
     <div class="links">
       <a href="#market">市场</a>
       <a href="#demand">需求</a>
@@ -371,7 +372,7 @@ footer a:hover{text-decoration:underline}
           <tr><td>主控</td><td>树莓派级</td><td>ODM 官方架构，可国产替代</td></tr>
           <tr><td>电池</td><td>2S/3S LiPo</td><td><span class="note">待 M0 确认</span></td></tr>
           <tr><td>开源协议</td><td>Apache-2.0</td><td>图纸 / BOM / 训练栈全部公开</td></tr>
-          <tr><td>训练栈</td><td>mujoco_playground + JAX</td><td>Berkeley Humanoid 血统，standing 重训成本 &lt;$3</td></tr>
+          <tr><td>训练栈</td><td>mujoco_playground + JAX</td><td>Berkeley Humanoid 血统，150M 全程重训成本 &lt;¥10（预算口径，4090 @14K steps/s）</td></tr>
         </tbody>
       </table>
     </div>
@@ -382,8 +383,8 @@ footer a:hover{text-decoration:underline}
           <tr><th>能力</th><th>状态</th><th>交付窗口</th></tr>
         </thead>
         <tbody>
-          <tr><td>站立（RL 训练）</td><td><span class="tag wip">M1 gate 训练中</span></td><td>2026-10</td></tr>
-          <tr><td>行走（joystick 策略）</td><td><span class="tag ready">官方已有</span></td><td>随整机</td></tr>
+          <tr><td>站立（RL 训练）</td><td><span class="tag warn">已训验收·学到站住</span></td><td>修复重训 2026-10</td></tr>
+          <tr><td>行走（joystick 策略）</td><td><span class="tag ready">官方已有</span></td><td>随整机（自训 fork 修复中）</td></tr>
           <tr><td>踢球（差异化技能）</td><td><span class="tag todo">重训中</span></td><td>2027-01 M2</td></tr>
           <tr><td>AI 对话</td><td><span class="tag ready">架构就绪</span></td><td>随整机</td></tr>
           <tr><td>技能市场</td><td><span class="tag todo">L3 平台</span></td><td>2027-03+</td></tr>
@@ -428,10 +429,10 @@ footer a:hover{text-decoration:underline}
           <tr><th>环节</th><th>状态</th><th>说明</th></tr>
         </thead>
         <tbody>
-          <tr><td>走路策略</td><td><span class="tag ready">不重训</span></td><td>Playground 默认产出现成，省最大一块训练预算</td></tr>
+          <tr><td>走路策略</td><td><span class="tag ready">官方可用</span></td><td>官方 joystick 策略现成可用（省预算基线）；自训 fork（Spec#2 自定义 reward）150M 验收学到站住 → 修复重训中，Codex 独立审计 + trace 逐步证据闭环</td></tr>
           <tr><td>技能重训（踢球等）</td><td><span class="tag wip">AutoDL 4090</span></td><td>microduck-rl-fork 方法论（宽窗验证/失败统计）整体迁移；MicroDuck 系单技能 4096 env 1-2h、$1-2 量级</td></tr>
           <tr><td>训练成本台账</td><td><span class="tag ready">纪律沿用</span></td><td>每技能记录 GPU 时数/成本，沿用轨 B 纪律</td></tr>
-          <tr><td>M1 gate 验证</td><td><span class="tag wip">待跑</span></td><td>共创后第一周跑通一个最小重训技能（坐/起或挥手）作训练轨 gate，不验证不排产</td></tr>
+          <tr><td>M1 gate 验证</td><td><span class="tag warn">已跑·未过</span></td><td>150M joystick 验收 0/20（策略稳定站住非行走）→ 质量闸门拦截不签收 → 修复重训中；gate 定义升级：可站可走才算达标</td></tr>
         </tbody>
       </table>
     </div>
@@ -463,7 +464,7 @@ footer a:hover{text-decoration:underline}
     <p class="sec-sub">每个里程碑有 Gate 验收，不过 Gate 不进入下一阶段。资金路径：M0-M2 原型 -¥180 万 → M3 预售回款 → M4 交付。</p>
     <div class="road">
       <div class="road-card"><div class="dot" style="background:var(--duck)"></div><div class="m">M0 共创会</div><div class="d">2026-09</div><div class="g"><b>三张报价单实填</b>友A PCB / 友B 模具 / 舵机批量价 · 共创书签署 · 设计 or 代工决策</div></div>
-      <div class="road-card"><div class="dot" style="background:var(--accent)"></div><div class="m">M1 验证</div><div class="d">2026-10</div><div class="g"><b>N=200 + 训练 gate</b>极客预售意向 ≥200 · standing 重训跑通 · 家长访谈 N=30 · 融资启动</div></div>
+      <div class="road-card"><div class="dot" style="background:var(--accent)"></div><div class="m">M1 验证</div><div class="d">2026-10</div><div class="g"><b>N=200 + 训练 gate</b>极客预售意向 ≥200 · standing 重训达标（可站可走验收，非仅站住）· 家长访谈 N=30 · 融资启动</div></div>
       <div class="road-card"><div class="dot" style="background:var(--blue)"></div><div class="m">M2 原型</div><div class="d">2027-01</div><div class="g"><b>10 台可走</b>结构件组装 · 载板点亮 · 走路跑通 · 踢球重训 · 500h 耐久</div></div>
       <div class="road-card"><div class="dot" style="background:var(--purple)"></div><div class="m">M3 预售</div><div class="d">2027-03</div><div class="g"><b>≥200 锁单</b>预售 500 台 · 注塑+EMS 量产爬坡 · 内容 1.0 打包</div></div>
       <div class="road-card"><div class="dot" style="background:var(--green)"></div><div class="m">M4 交付</div><div class="d">2027-09</div><div class="g"><b>退货 &lt;5%</b>交付 + 内容 1.0 · 技能市场 MVP · 用户质量闭环</div></div>
@@ -502,7 +503,7 @@ footer a:hover{text-decoration:underline}
     <h2><span class="k">◆</span> FAQ</h2>
     <div class="faq-item"><div class="q">为什么 42cm「大鸭」而不是 25cm MicroDuck？</div><div class="a">25cm 方案 15 只进口舵机要 ¥4,500+，C 端定价 ¥1,999-2,599 结构性亏损。42cm ODM 同工程师同源，14 只国产 STS3215 只要 ¥840-980，扭矩还大 3 倍，能踢球。成本结构和能力都赢。</div></div>
     <div class="faq-item"><div class="q">开源协议怎么算？能用它做产品卖钱吗？</div><div class="a">Apache-2.0：全部图纸/BOM/训练栈公开，商用合规，可闭源衍生。开源生态 = 打样成本趋零 + 组装路线验证过（同济教程实测 ¥3,000 整机）。</div></div>
-    <div class="faq-item"><div class="q">「RL 踢球」是真的自己学会的吗？</div><div class="a">是。MuJoCo 仿真 + 强化学习训练策略 → 导出 ONNX → 部署真机。训练轨 M1 gate（standing 重训）已在 AutoDL 4090 执行，成本 &lt;¥10，踢球策略 2027-01 M2 交付。</div></div>
+    <div class="faq-item"><div class="q">「RL 踢球」是真的自己学会的吗？</div><div class="a">是。MuJoCo 仿真 + 强化学习训练策略 → 导出 ONNX → 部署真机。训练轨已跑通第一个 gate（standing 150M，AutoDL 4090，成本 &lt;¥10 预算口径）——验收发现学到的是站住而非行走：站姿 imitation 正奖励 + 跌倒惩罚缺失，站住成为奖励结构下的局部最优。未签收，修复重训中（独立 Codex 审计 + trace 逐步证据闭环）。质量闸门实证：学到站住不算完成。踢球策略 2027-01 M2 交付。</div></div>
     <div class="faq-item"><div class="q">跟普通 AI 玩具/机器人课有什么区别？</div><div class="a">孩子要的不是内容，是活的回应。DuckMate 只承载屏幕给不了的三种「具身独有」：物理因果（说踢球它就踢飞）、真实责任（会摔倒要充电会记住你）、身体性惊喜（亲眼看到它长大）。</div></div>
     <div class="faq-item"><div class="q">现在能做什么？怎么参与？</div><div class="a">M0 共创会准备中（三张报价单已就绪，日期待 Sky 定）。极客可登记预售意向（¥500 可退），早鸟 ¥3,999 锁定 + 编号铭牌 + 共创社群。进度实时更新在 Robot 研究群。</div></div>
     <div class="faq-item"><div class="q">最大的风险是什么？</div><div class="a">预售不及 N=200（M1 gate 不通过则止步）。缓解：极客社区预热 + 早鸟价 + 共创社群锁意向；真机舵机损坏风险靠「虚拟训练成熟再上真机」规避。完整风险清单见项目管理文档。</div></div>
@@ -511,7 +512,7 @@ footer a:hover{text-decoration:underline}
 
 <footer>
   <div class="inner">
-    <p>DuckMate 大鸭路线 v3.0 · Apache-2.0 · 广州 · 详细 BP v3.0 备索</p>
+    <p>DuckMate 大鸭路线 v3.1 · Apache-2.0 · 广州 · 详细 BP v3.0 备索</p>
     <p style="font-size:11px;margin-top:6px">42cm 开源双足机器人鸭 · RL 踢球 + AI 对话 · M0 共创会准备中 · 数据一手可追溯</p>
   </div>
 </footer>
