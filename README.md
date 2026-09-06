@@ -26,5 +26,3 @@ python3 -m http.server 8000
 ## 在线地址
 
 GitHub Pages: https://k286c7hg65-hub.github.io/duckmate/
-
-> 仓库沿革：原托管于 skyflyld/duckmate（应急迁移），2026-09-06 回迁至本仓库作为产品线主仓；skyflyld 保留镜像。
