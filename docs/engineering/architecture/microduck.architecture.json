@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MicroDuck 架构与演进",
+    "locale": "zh-CN",
+    "output": "microduck-architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      { "id": "main-path", "label": "主路径：意图→动作", "focus": ["user", "commander", "orch", "policies", "sim"], "note": "自然语言经 Agent 认知层分解，技能库/编排器驱动策略，MuJoCo 中验证。" },
+      { "id": "vision-loop", "label": "视觉闭环", "focus": ["sim", "vision", "commander"], "note": "渲染定位球 → 证据回传认知层 → 追球决策。" },
+      { "id": "train-flow", "label": "训练回流", "focus": ["train", "hub", "policies", "duck"], "note": "RL 训练 → HF Hub 分发 → 策略更新（仿真/真机）。" }
+    ]
+  },
+  "components": [
+    { "id": "user", "type": "external", "label": "自然语言 / 摄像头", "sublabel": "Sky 指令 · 视觉画面", "pos": [30, 290], "size": [120, 60] },
+    { "id": "commander", "type": "backend", "label": "Agent 认知层", "sublabel": "commander / planner", "pos": [220, 290], "size": [140, 64], "tag": "LLM 意图→DSL · 长程分解" },
+    { "id": "skills", "type": "database", "label": "技能库", "sublabel": "duck_skills", "pos": [220, 100], "size": [140, 60], "tag": "7 原子 + 4 组合" },
+    { "id": "orch", "type": "backend", "label": "编排器", "sublabel": "duck_orchestrator", "pos": [440, 290], "size": [130, 60], "tag": "命令槽 · 场景映射" },
+    { "id": "policies", "type": "backend", "label": "9×ONNX 策略", "sublabel": "walk / stand / kick…", "pos": [640, 290], "size": [140, 64], "tag": "50 Hz 推理" },
+    { "id": "sim", "type": "external", "label": "MuJoCo 虚拟验证", "sublabel": "CPU 无头渲染", "pos": [860, 120], "size": [150, 64], "tag": "当前主力验证域" },
+    { "id": "duck", "type": "external", "label": "MicroDuck 真机", "sublabel": "14×XL330 · ~800g", "pos": [860, 460], "size": [150, 64], "tag": "2026 圣诞目标" },
+    { "id": "vision", "type": "frontend", "label": "视觉闭环", "sublabel": "duck_vision", "pos": [220, 500], "size": [140, 60], "tag": "渲染→定位→追球" },
+    { "id": "train", "type": "cloud", "label": "RL 训练", "sublabel": "microduck_rl · mjlab PPO", "pos": [440, 600], "size": [150, 64], "tag": "BAM 执行器 · 域随机化" },
+    { "id": "hub", "type": "cloud", "label": "HF Hub 策略市场", "sublabel": "pollen-robotics", "pos": [660, 600], "size": [150, 64], "tag": "ONNX 发布/分发" }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "MicroDuck 控制栈（Agent + 技能 + 编排）", "wraps": ["commander", "skills", "orch", "policies", "vision"] },
+    { "kind": "region", "label": "训练与分发（需 GPU 出口）", "wraps": ["train", "hub"] },
+    { "kind": "region", "label": "被控对象：仿真 → 真机", "wraps": ["sim", "duck"] }
+  ],
+  "connections": [
+    { "id": "user-cmd", "from": "user", "to": "commander", "label": "指令 / 画面", "variant": "emphasis" },
+    { "id": "cmd-skills", "from": "commander", "to": "skills", "label": "选技能" },
+    { "id": "cmd-orch", "from": "commander", "to": "orch", "label": "DSL 下发", "variant": "emphasis", "labelDy": 14 },
+    { "id": "skills-orch", "from": "skills", "to": "orch", "label": "技能展开" },
+    { "id": "orch-policies", "from": "orch", "to": "policies", "label": "命令槽 cmd" },
+    { "id": "policies-sim", "from": "policies", "to": "sim", "label": "动作执行（现在）", "variant": "emphasis" },
+    { "id": "sim-duck", "from": "sim", "to": "duck", "label": "sim2real 移植", "variant": "dashed", "labelDy": 34 },
+    { "id": "vision-cmd", "from": "vision", "to": "commander", "label": "球位置证据" },
+    { "id": "train-hub", "from": "train", "to": "hub", "label": "发布 ONNX", "variant": "emphasis" },
+    { "id": "hub-policies", "from": "hub", "to": "policies", "label": "策略更新", "variant": "dashed", "fromSide": "top", "toSide": "bottom" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "现在 · 虚拟验证", "items": ["9 策略全验证（含 ground_pick 相位修复）", "LLM 长程规划 + 失败重试闭环", "推球冲撞可靠化（0.28m 达标）"] },
+    { "dot": "amber", "title": "近期 · 训练出口", "items": ["重训 kick 策略（官方踢窗 1-8cm 太窄）", "GPU 出口：HF Jobs T4 或 Macmini Genesis", "Preflight + Verify 六路由（抄 EmbodiedSkills）"] },
+    { "dot": "violet", "title": "2026 圣诞 · sim2real", "items": ["真机移植（14×XL330 + BAM 标定）", "域随机化对齐（延迟/电压/回差）", "视觉闭环上真机"] },
+    { "dot": "rose", "title": "未来 · 闭环学习", "items": ["执行轨迹落盘 → 训 verifier/planner", "技能市场（M8 policy 热切换）", "VLA 层：语言直驱动作（EmbodiedSkills 方向）"] }
+  ]
+}
