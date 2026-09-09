@@ -4,15 +4,16 @@
 
 ODM 国产化降本 + RL 踢球技能 + AI 对话，中国 C 端 AI 原生桌面硬件。
 
-## 本项目内容
-
-这是 DuckMate 的产品官网源码仓库：
+## 仓库内容
 
 ```
-├── index.html                  # 官网单页（产品介绍 / 架构 / 共创信息）
-└── assets/
-    ├── arch_tech_eli5.png      # 架构图 · 大白话版（技术科普）
-    └── arch_tech_pro.png       # 架构图 · 专业版（系统架构）
+├── index.html              # 官网单页（产品介绍 / 架构 / 共创信息）
+├── architecture.html       # 架构详情页（可交互架构图）
+├── assets/                 # 架构图（大白话版 / 专业版）
+└── docs/
+    ├── business/           # 商业层：执行摘要 / 路线图 / BP / 共创协议 / 定价
+    ├── engineering/        # 技术层：硬件 BOM / ODM / 架构源 / 虚拟鸭子软件栈
+    └── rl-verification/    # joystick RL 踢球训练验收证据链
 ```
 
 ## 本地预览
