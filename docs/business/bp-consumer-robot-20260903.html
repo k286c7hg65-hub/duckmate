@@ -1,0 +1,304 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>融资计划书 BP · 消费级具身机器人 DuckMate</title>
+    <style>
+      @page { size: A4; margin: 18mm 16mm; }
+      body { font-family: 'Noto Sans CJK SC', sans-serif; font-size: 10.5pt; line-height: 1.65; color: #222; }
+      h1 { font-size: 20pt; border-bottom: 3px solid #FFC53D; padding-bottom: 8px; margin-top: 0; }
+      h2 { font-size: 14pt; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-top: 22px; color: #111; }
+      h3 { font-size: 12pt; margin-top: 16px; }
+      h4 { font-size: 11pt; margin-top: 12px; }
+      table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 9pt; }
+      th { background: #FFF4D6; font-weight: bold; }
+      th, td { border: 1px solid #ccc; padding: 4px 7px; text-align: left; vertical-align: top; }
+      pre { background: #f6f6f6; padding: 10px; font-size: 8.5pt; border-radius: 4px; white-space: pre-wrap; word-break: break-all; }
+      code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; }
+      ul, ol { margin: 4px 0 10px 0; padding-left: 22px; }
+      li { margin: 2px 0; }
+      blockquote { border-left: 4px solid #FFC53D; margin: 8px 0; padding: 2px 12px; color: #555; background: #FFFBF0; }
+    </style>
+    </head><body><h1>融资计划书（BP）</h1>
+<h2>消费级具身机器人：中国家庭的第一个 AI 伙伴</h2>
+
+<p><b>项目代号</b>：DuckMate（暂定，待共创定名）</p>
+<p><b>版本</b>：v1.0 | 2026-09-03</p>
+<p><b>密级</b>：机密 · 仅限指定投资人</p>
+
+<p>---</p>
+
+<h2>0. 保密声明</h2>
+
+<p>本文件含未公开商业信息，仅供评估用途。未经书面许可不得复制、传播或用于本项目评估以外的任何目的。数据纪律声明：除标注一手来源的事实外，市场量级为自下而上推算（推算方法与假设均披露），不引用无法核验的第三方市场规模数字。</p>
+
+<p>---</p>
+
+<h2>1. 执行摘要</h2>
+
+<p><b>我们做什么</b>：面向中国/东南亚家庭的双足 AI 教育陪伴机器人。基于已验证的开源具身智能软件栈（Apache-2.0），用国产供应链把欧美 $399 级产品的完整体验，以 ¥1999-2599 带给中国家庭，差异化定位在儿童 AI 教育陪伴场景。</p>
+
+<p><b>为什么是现在（三窗交汇）</b>：</p>
+<ol>
+<li><b>需求验证窗</b>：MicroDuck（Pollen Robotics）2026-08-27 预售爆单——官方原话 &quot;reached the Shopify UI limit&quot;；同门 Reachy Mini 已售 10,000+ 台</li>
+<li><b>中国真空窗</b>：MicroDuck 首发仅北美/欧洲/英国；中国用户需 ¥3500+ 税运且 2027 年才到手</li>
+<li><b>供应链红利窗</b>：创始团队含 PCB 量产厂 + 精密模具厂实控人，BOM 成本可较欧美压低 30-50%</li>
+</ol>
+
+<p><b>团队</b>：3 位创始人覆盖硬件量产（PCB 代工厂主）、精密结构/模具（黄金首饰模具厂主）、产品/商业/合规/出海（16 年金融科技与电商支付，前蚂蚁/字节）。</p>
+
+<p><b>融资需求</b>：天使轮 ¥300-500 万，出让 10-15%（框架，待定），12 个月至首批 500 台交付。</p>
+
+<p><b>核心风险与对策</b>：舵机成本（生死项，共创首日实测，三路对策）；MicroDuck Q4 出货（外部观测 gate，非依赖项）。</p>
+
+<p>---</p>
+
+<h2>2. 市场机会</h2>
+
+<h3>2.1 全球：消费机器人的「开源时刻」</h3>
+
+<table><thead><tr><th>信号</th><th>事实</th><th>来源</th></tr></thead><tbody>
+<tr><td>需求爆发</td><td>MicroDuck $399 预售 8/27 开，爆单至 Shopify 限额</td><td>官方博客（含 HF 联创 Thomas Wolf）</td></tr>
+<tr><td>规模化先例</td><td>Reachy Mini 已售 10,000+ 台</td><td>官方博客原话</td></tr>
+<tr><td>内容众包</td><td>发布 4 天社区训出翻筋斗/霹雳舞/激光追踪</td><td>社区实测（一手）</td></tr>
+<tr><td>上一代教训</td><td>Anki（闭源+自建内容）累计融资超 $2 亿后倒闭 ⚠️常识性引用</td><td>公开报道</td></tr>
+</tbody></table>
+
+<p><b>结构性结论</b>：消费机器人的胜利公式 = 平价硬件 × 开源生态 × 社区内容。闭源单打（Anki）已证伪，开源众包（MicroDuck）已验证。本项目的商业模式完全沿胜利公式设计。</p>
+
+<h3>2.2 中国：需求真空 + 付费能力最强场景</h3>
+
+<ul>
+<li>MicroDuck 首发区域无中国（官网 FAQ 一手核验）</li>
+<li>中国家长对「教育」付费意愿全球最强；而 MicroDuck 定位开发者/创客，<b>教育陪伴是 Pollen 未覆盖的定位</b></li>
+<li>双足形态（vs 市面轮式/积木机器人）是差异化制高点</li>
+</ul>
+
+<h3>2.3 市场规模推算（自下而上，方法披露）</h3>
+
+<p><b>推算方法（非第三方报告，均为可复核逻辑）</b>：</p>
+<ul>
+<li>锚点 A：MicroDuck 首周预售爆单 → 保守估计首年全球出货 5,000-20,000 台（$399 单价 → $2-8M 营收量级，与其 Shopify 爆单现象一致）</li>
+<li>锚点 B：Reachy Mini 累计 10,000+ 台（$1,000+ 单价，教育/研究渠道）</li>
+<li>锚点 C：中国 K12 学生约 1.5 亿人（教育部公开统计常识），机器人/编程教育渗透率极低</li>
+</ul>
+
+<p><b>TAM（3 年视角）</b>：中国教育陪伴机器人可寻址市场 ≈ 愿意为儿童 AI 硬件支付 ¥1500-3000 的城市家庭。假设目标城市中产家庭 3,000 万户、3 年渗透 0.1% → <b>约 3 万台/年 ≈ ¥6-9 亿</b>（推算，非第三方数据）</p>
+
+<p><b>SAM（本项目 3 年）</b>：教育渠道 + 线上直营可触达 ≈ 5,000-15,000 台/年（¥1-3.5 亿）</p>
+
+<p><b>SOM（本项目 3 年保守目标）</b>：3,000-5,000 台/年（¥600-1300 万），占 SAM 的 3-5%——<b>验证性规模，不为份额叙事融资</b></p>
+
+<p>&gt; ⚠️ 以上为推算框架，真实市场规模以共创后渠道访谈 + 预售数据校准（见 11. 里程碑 M1）。</p>
+
+<p>---</p>
+
+<h2>3. 产品与技术</h2>
+
+<h3>3.1 产品定义</h3>
+
+<table><thead><tr><th>维度</th><th>规格</th></tr></thead><tbody>
+<tr><td>形态</td><td>双足小型机器人（14 自由度级），IP 化外观（鸭/恐龙/宠物三选一）</td></tr>
+<tr><td>价位</td><td>¥1999-2599（旗舰）/ ¥1299（8-10 舵机入门款，若舵机成本验证不过）</td></tr>
+<tr><td>目标用户</td><td>6-14 岁儿童 + 家长（教育买单人）</td></tr>
+<tr><td>核心场景</td><td>AI 启蒙课程（编程/具身认知）、陪伴互动、创客进阶</td></tr>
+</tbody></table>
+
+<h3>3.2 技术栈（开源复用 + 自研层）</h3>
+
+<pre>
+┌─────────────────────────────────────────────┐
+│ 自研层：中文交互 · 教育课程 · IP 外观 · 主板  │  ← 差异化壁垒
+├─────────────────────────────────────────────┤
+│ 开源复用：MuJoCo 仿真 · BAM 执行器模型        │
+│           · PPO/域随机化配方 · 9 策略 ONNX    │  ← Apache-2.0 合法
+├─────────────────────────────────────────────┤
+│ 硬件：RK3566 级主控（国产）· XL330 级舵机     │
+│       · PCB 自研（友A）· 结构/外观（友B）     │  ← 供应链
+└─────────────────────────────────────────────┘
+</pre>
+
+<p><b>为什么开源复用成立</b>：microduck_rl 220 文件（BAM + 配方 + 58 STL）、microduck 主仓 284 文件（131 Rust + 11 ONNX）、942 测试全开源。训练配方完整度实测：5 组标定 PD 直接给、域随机化范围全给、sim2real 4096 env 1-2h——<b>这意味着我们不从零造轮子，从「已验证可量产」的起点出发</b>（本项目技术验证已在本工作区完成：CPU 全栈跑通 9 策略 + 编排 + 视觉闭环）。</p>
+
+<h3>3.3 差异化 vs MicroDuck</h3>
+
+<table><thead><tr><th></th><th>MicroDuck</th><th>DuckMate（本项目）</th></tr></thead><tbody>
+<tr><td>定位</td><td>开发者/创客玩具</td><td>家庭教育 AI 伙伴</td></tr>
+<tr><td>语言</td><td>英文</td><td>中文优先</td></tr>
+<tr><td>内容</td><td>社区技能</td><td>教育课程体系（可迁移）</td></tr>
+<tr><td>渠道</td><td>欧美直营</td><td>中国线上+教育渠道</td></tr>
+<tr><td>硬件</td><td>欧洲供应链</td><td>国产供应链（成本 -30-50%）</td></tr>
+<tr><td>外观</td><td>单一</td><td>IP 化 + 配件生态</td></tr>
+</tbody></table>
+
+<h3>3.4 产品路线图</h3>
+
+<table><thead><tr><th>版本</th><th>时间</th><th>能力</th><th>里程碑依赖</th></tr></thead><tbody>
+<tr><td>V1</td><td>12 个月</td><td>走/坐/挥手/踢球 + 编程入门课</td><td>M0-M3（见 §11）</td></tr>
+<tr><td>V2</td><td>18 个月</td><td>视觉闭环（看球追球）+ 策略热切换</td><td>基于 M8 模式自研</td></tr>
+<tr><td>V3</td><td>24 个月</td><td>策略市场开放（社区上传技能）</td><td>保有量 ≥3000 台</td></tr>
+</tbody></table>
+
+<p>---</p>
+
+<h2>4. 商业模式</h2>
+
+<h3>4.1 收入模型（硬件获客，内容/配件变现）</h3>
+
+<table><thead><tr><th>收入源</th><th>定价</th><th>毛利预期</th><th>阶段</th><th>逻辑</th></tr></thead><tbody>
+<tr><td>硬件整机</td><td>¥1299-2599</td><td>30-45%</td><td>V1</td><td>获客入口，微利</td></tr>
+<tr><td>IP 配件/皮肤</td><td>¥99-399</td><td>50-60%</td><td>V1 中</td><td>模具复用（友B 核心优势）</td></tr>
+<tr><td>教育订阅</td><td>¥99-299/年</td><td>70-80%</td><td>V1 中</td><td>内容复利（Sky 课程体系迁移）</td></tr>
+<tr><td>策略市场</td><td>抽成 10-20%</td><td>90%+</td><td>V3</td><td>社区网络效应</td></tr>
+</tbody></table>
+
+<h3>4.2 单位经济模型（三场景，舵机价待实测）</h3>
+
+<table><thead><tr><th>场景</th><th>BOM</th><th>零售(旗舰)</th><th>毛利</th><th>条件</th></tr></thead><tbody>
+<tr><td>A 乐观</td><td>$230</td><td>$399</td><td>42%</td><td>舵机批量 $130</td></tr>
+<tr><td>B 中性</td><td>$280</td><td>$399</td><td>30%</td><td>舵机批量 $180</td></tr>
+<tr><td>C 保守</td><td>$180</td><td>$299(简化版)</td><td>40%</td><td>8-10 舵机，走量</td></tr>
+</tbody></table>
+
+<p><b>生死变量</b>：舵机占 BOM 65-80%。对策三路：① XL330 批量采购议价（1000+ 量级）② 国产替代评估（友B 模具能力 + Dynamixel 协议国产空白）③ 降自由度简化版兜底。<b>共创首日实测（M0）</b>。</p>
+
+<h3>4.3 获客（GTM）</h3>
+
+<table><thead><tr><th>阶段</th><th>渠道</th><th>动作</th></tr></thead><tbody>
+<tr><td>冷启动（0-6 月）</td><td>开源社区 + 教育 KOL + 私域</td><td>技术内容种草（我们已在本工作区产出完整技术验证，可直接转内容）</td></tr>
+<tr><td>放量（6-12 月）</td><td>抖音/小红书/京东 + 众筹（Kickstarter 出海 / 有品）</td><td>预售锁单 + 教育渠道代理</td></tr>
+<tr><td>规模化（12 月+）</td><td>线下教育机构 + 出海</td><td>套装 + 课程授权</td></tr>
+</tbody></table>
+
+<p>---</p>
+
+<h2>5. 竞争格局</h2>
+
+<table><thead><tr><th>玩家</th><th>定位</th><th>价位</th><th>弱点（我们的机会）</th></tr></thead><tbody>
+<tr><td>Pollen MicroDuck</td><td>欧美创客</td><td>$399</td><td>无中国、非教育、硬件闭源迭代慢</td></tr>
+<tr><td>复刻党（fanhao375 等）</td><td>图纸社区</td><td>无商品</td><td>无量产/无品牌/无售后</td></tr>
+<tr><td>宇树</td><td>人形/四足</td><td>¥数千-数万</td><td>非玩具价位、非儿童</td></tr>
+<tr><td>教育机器人（积木/轮式）</td><td>编程教育</td><td>¥500-2000</td><td>无双足、无真 RL 策略、同质化</td></tr>
+<tr><td>Anki（已停）</td><td>闭源玩具</td><td>$180+</td><td>死亡路径教材</td></tr>
+</tbody></table>
+
+<p><b>壁垒构建顺序</b>：供应链成本（友A/B，即刻）→ IP 外观与模具（友B，6 个月）→ 教育内容（Sky，12 个月）→ 社区生态（24 个月）。</p>
+
+<p>---</p>
+
+<h2>6. 团队</h2>
+
+<table><thead><tr><th>角色</th><th>背景</th><th>本项目职责</th></tr></thead><tbody>
+<tr><td>创始人兼 CEO（Sky）</td><td>16 年金融科技/支付/电商/合规（蚂蚁 7 年/字节 4 年/华为 4 年）；TikTok Shop 多国支付；余额宝流动性管理；香港 SVF 首批牌照</td><td>战略/融资/渠道/教育内容/合规</td></tr>
+<tr><td>联合创始人·硬件（友A）</td><td>PCB 代工厂实控人</td><td>主板自研/量产/供应链</td></tr>
+<tr><td>联合创始人·结构（友B）</td><td>精密黄金首饰模具（微米级）实控人</td><td>结构件/外观模具/IP 配件/国产舵机评估</td></tr>
+</tbody></table>
+
+<p><b>组合稀缺性</b>：消费硬件创业的第一杀手是「成本压不下来 + 内容养不起」。本组合 = 成本端（两家工厂实控人直接下场）+ 内容端（教育课程体系可迁移）同时在场，且为信任共创关系（非雇佣），早期烧钱速度可压至行业最低。</p>
+
+<p>---</p>
+
+<h2>7. 财务预测（3 年，三场景框架）</h2>
+
+<p>&gt; 假设声明：以下为<b>框架模型</b>，单价/销量/毛利均需 M0（舵机实测）与 M1（预售验证）后校准。单位：人民币万元。</p>
+
+<h3>7.1 保守场景（验证性经营，不融资扩张）</h3>
+
+<table><thead><tr><th>年度</th><th>销量(台)</th><th>营收</th><th>毛利</th><th>费用</th><th>净利</th></tr></thead><tbody>
+<tr><td>Y1</td><td>500</td><td>110</td><td>33</td><td>180</td><td>-147</td></tr>
+<tr><td>Y2</td><td>1,500</td><td>330</td><td>110</td><td>220</td><td>-110</td></tr>
+<tr><td>Y3</td><td>3,000</td><td>660</td><td>230</td><td>260</td><td>-30</td></tr>
+</tbody></table>
+
+<h3>7.2 中性场景（订阅+配件起量）</h3>
+
+<table><thead><tr><th>年度</th><th>销量(台)</th><th>硬件营收</th><th>配件+订阅</th><th>总营收</th><th>净利</th></tr></thead><tbody>
+<tr><td>Y1</td><td>800</td><td>170</td><td>15</td><td>185</td><td>-130</td></tr>
+<tr><td>Y2</td><td>3,000</td><td>630</td><td>160</td><td>790</td><td>+40</td></tr>
+<tr><td>Y3</td><td>8,000</td><td>1,680</td><td>520</td><td>2,200</td><td>+330</td></tr>
+</tbody></table>
+
+<h3>7.3 乐观场景（出海 + 教育渠道放量）</h3>
+
+<table><thead><tr><th>年度</th><th>销量(台)</th><th>总营收</th><th>净利</th></tr></thead><tbody>
+<tr><td>Y1</td><td>1,500</td><td>330</td><td>-90</td></tr>
+<tr><td>Y2</td><td>8,000</td><td>2,400</td><td>+380</td></tr>
+<tr><td>Y3</td><td>20,000</td><td>6,000</td><td>+1,200</td></tr>
+</tbody></table>
+
+<p><b>盈亏平衡点</b>：中性场景 Y2 中期（累计销量 ~4,000 台）。天使资金覆盖至 Y2 初。</p>
+
+<p>---</p>
+
+<h2>8. 融资需求</h2>
+
+<table><thead><tr><th>项</th><th>内容</th></tr></thead><tbody>
+<tr><td>轮次</td><td>天使轮</td></tr>
+<tr><td>金额</td><td>¥300-500 万（框架，待 Sky 定）</td></tr>
+<tr><td>出让</td><td>10-15%（框架）</td></tr>
+<tr><td>估值逻辑</td><td>团队完整 + 已验证技术栈 + 供应链在手；对标可比早期硬件项目（MicroDuck 生态概念溢价）</td></tr>
+<tr><td>用途</td><td>原型打样 ¥80-100 万 / 首批物料 ¥120-150 万 / 教育内容 ¥50-80 万 / 团队运营 ¥50-100 万 / 备用 ¥30-50 万</td></tr>
+</tbody></table>
+
+<p><b>12 个月资金消耗路径</b>：M0-M2（原型，-¥180 万）→ M3（预售启动，回款开始）→ M4（交付，回款 60%+）。</p>
+
+<p>---</p>
+
+<h2>9. 风险与对策</h2>
+
+<table><thead><tr><th>风险</th><th>概率</th><th>影响</th><th>对策</th></tr></thead><tbody>
+<tr><td>舵机成本压不下</td><td>中</td><td>高（毛利崩）</td><td>M0 首日实测；三路对策（批量/国产/降自由度）</td></tr>
+<tr><td>MicroDuck Q4 出货扑街</td><td>中</td><td>中（品类热度退）</td><td>独立品牌不依赖；仅作外部观测 gate</td></tr>
+<tr><td>开源软件无壁垒</td><td>高</td><td>低-中</td><td>壁垒在供应链执行+内容+渠道，非软件</td></tr>
+<tr><td>双足玩具可靠性</td><td>中</td><td>高（退货）</td><td>M2 原型 10 台 500h 耐久测试</td></tr>
+<tr><td>教育内容合规（儿童数据）</td><td>低</td><td>中</td><td>Sky 合规背景；早期规避儿童数据采集</td></tr>
+<tr><td>竞品跟进（Pollen 进中国）</td><td>低-中</td><td>中</td><td>本地化速度 + 教育定位先占</td></tr>
+</tbody></table>
+
+<p>---</p>
+
+<h2>10. 退出路径</h2>
+
+<ol>
+<li><b>战略并购</b>：教育硬件集团 / 大厂机器人部门（对标：消费机器人早期项目被并购先例普遍）</li>
+<li><b>独立成长</b>：订阅收入模型支撑持续经营</li>
+<li><b>供应链整合</b>：若整机品牌受阻，收缩为「开源机器人制造伙伴」（OEM/ODM），友A/B 工厂即产能底座</li>
+</ol>
+
+<p>---</p>
+
+<h2>11. 里程碑</h2>
+
+<table><thead><tr><th>#</th><th>时间</th><th>交付</th><th>验证标准</th><th>资金</th></tr></thead><tbody>
+<tr><td>M0</td><td>2026-09（下周）</td><td>共创协议 + 舵机实测</td><td>舵机批量价落表</td><td>0</td></tr>
+<tr><td>M1</td><td>2026-10</td><td>需求验证</td><td>家长访谈 N=30，≥30% 愿付 ¥1999+</td><td>-10</td></tr>
+<tr><td>M2</td><td>2027-01</td><td>原型 10 台</td><td>开源策略跑通 + 500h 耐久</td><td>-120</td></tr>
+<tr><td>M3</td><td>2027-03</td><td>预售 500 台</td><td>≥200 台锁单</td><td>-60</td></tr>
+<tr><td>M4</td><td>2027-09</td><td>交付 + 内容 1.0</td><td>退货率 <5%</td><td>-50</td></tr>
+</tbody></table>
+
+<p>---</p>
+
+<h2>12. 附录</h2>
+
+<h3>A. 一手事实基线（2026-09-02 核验，全部可复验）</h3>
+<ul>
+<li>MicroDuck $399 预售 8/27，首发北美/欧洲/英国，圣诞前发货；官方博客含 HF 联创</li>
+<li>软件全开源 Apache-2.0（主仓 284 文件/942 测试；RL 仓 220 文件含 58 STL）</li>
+<li>硬件闭源 &quot;(for now)&quot;；复刻党 4 分支（fanhao375 ★347，PCB 协议级逆向完成）</li>
+<li>XL330 零售 €45.76/个（15 个 ≈ €640 &gt; $399 整机 → 个人复刻比买贵）</li>
+<li>Reachy Mini 累计 10,000+ 台；9 策略已上 HF Hub</li>
+<li>本工作区已完成：CPU 全栈跑通（MuJoCo + 9 策略 + 编排 + LLM 规划 + 视觉闭环 + 双球踢飞 demo）</li>
+</ul>
+
+<h3>B. 假设清单（需共创校准）</h3>
+<ol>
+<li>舵机批量价（A 厂/B 厂渠道）→ 决定 BOM 场景</li>
+<li>友A PCB MOQ/交期/单板价 → 主板成本</li>
+<li>友B 模具开模周期/单件成本 → 结构件成本与 V1 时间表</li>
+<li>融资额/出让比例/领投意向 → Sky 定</li>
+<li>首款 IP 形态（鸭/恐龙/宠物）→ 共创三选一</li>
+</ol>
+
+<h3>C. 联系我们</h3>
+<p>（占位：Sky 联系方式，共创后补）</p>
+
+<p>---</p>
+<p>*本 BP 由 Sky 团队与工作区智能体协作生成，2026-09-03。所有推算数据方法已披露，欢迎对假设提出挑战。*</p>
+</body></html>
