@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "DuckMate 产品架构 · 六层栈与 RL 技能生产",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "家庭 / 极客",
+      "sublabel": "中文指令 · 摄像头画面",
+      "pos": [
+        30,
+        232
+      ],
+      "size": [
+        104,
+        62
+      ],
+      "tag": "L1 极客 → L3 技能市场"
+    },
+    {
+      "id": "content",
+      "type": "database",
+      "label": "⑥ 内容层",
+      "sublabel": "AI 素养金字塔",
+      "pos": [
+        180,
+        96
+      ],
+      "size": [
+        130,
+        60
+      ],
+      "tag": "人格/互动/学习/创造 · 分龄"
+    },
+    {
+      "id": "brain",
+      "type": "backend",
+      "label": "⑤ 认知层",
+      "sublabel": "duck_vision · LLM · 中文指挥",
+      "pos": [
+        180,
+        232
+      ],
+      "size": [
+        130,
+        68
+      ],
+      "tag": "视觉证据 · 中文指挥"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "④ 行为编排层",
+      "sublabel": "duck_orchestrator",
+      "pos": [
+        360,
+        232
+      ],
+      "size": [
+        112,
+        68
+      ],
+      "tag": "7 原子 × 4 组合 · 热加载"
+    },
+    {
+      "id": "policy",
+      "type": "database",
+      "label": "③ 策略层",
+      "sublabel": "ONNX 技能库",
+      "pos": [
+        520,
+        232
+      ],
+      "size": [
+        112,
+        68
+      ],
+      "tag": "官方现成 · 自训重训中"
+    },
+    {
+      "id": "sim",
+      "type": "external",
+      "label": "MuJoCo 仿真",
+      "sublabel": "技能验收域",
+      "pos": [
+        700,
+        110
+      ],
+      "size": [
+        110,
+        60
+      ],
+      "tag": "当前主力验证"
+    },
+    {
+      "id": "phys",
+      "type": "external",
+      "label": "② 物理层",
+      "sublabel": "rustypot · 树莓派 · IMU",
+      "pos": [
+        800,
+        300
+      ],
+      "size": [
+        110,
+        62
+      ],
+      "tag": "1Mbps 总线 · 同库换协议"
+    },
+    {
+      "id": "body",
+      "type": "external",
+      "label": "① 身体层",
+      "sublabel": "ODM v2 · 42cm",
+      "pos": [
+        800,
+        390
+      ],
+      "size": [
+        110,
+        62
+      ],
+      "tag": "STS3215×14 · CAD/STL 开源"
+    },
+    {
+      "id": "ref",
+      "type": "external",
+      "label": "参考动作",
+      "sublabel": "auto_waddle 参考",
+      "pos": [
+        80,
+        585
+      ],
+      "size": [
+        105,
+        62
+      ],
+      "tag": "直线 / 转向 / 站立"
+    },
+    {
+      "id": "fit",
+      "type": "external",
+      "label": "多项式拟合",
+      "sublabel": "fit_poly",
+      "pos": [
+        230,
+        585
+      ],
+      "size": [
+        105,
+        62
+      ],
+      "tag": "周期参考 → 函数"
+    },
+    {
+      "id": "train",
+      "type": "cloud",
+      "label": "RL 训练",
+      "sublabel": "PPO · Playground",
+      "pos": [
+        380,
+        585
+      ],
+      "size": [
+        120,
+        66
+      ],
+      "tag": "AutoDL 4090 · 150M 已训"
+    },
+    {
+      "id": "export",
+      "type": "cloud",
+      "label": "ONNX 导出",
+      "sublabel": "策略文件",
+      "pos": [
+        545,
+        585
+      ],
+      "size": [
+        100,
+        62
+      ],
+      "tag": "固定 batch=1"
+    },
+    {
+      "id": "gate",
+      "type": "security",
+      "label": "质量闸门",
+      "sublabel": "验收 · 审计 · trace 证据",
+      "pos": [
+        690,
+        585
+      ],
+      "size": [
+        120,
+        66
+      ],
+      "tag": "学到站住 ≠ 完成"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "软件与内容栈（价值在灵魂）",
+      "wraps": [
+        "content",
+        "brain",
+        "orch",
+        "policy"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "被控对象：仿真验证（现在）",
+      "wraps": [
+        "sim"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "真机 DuckMate 42cm（2027-01 组装）",
+      "wraps": [
+        "phys",
+        "body"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "RL 技能生产闭环（不达标不放行）",
+      "wraps": [
+        "ref",
+        "fit",
+        "train",
+        "export",
+        "gate"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "user-brain",
+      "from": "user",
+      "to": "brain",
+      "label": "指令",
+      "variant": "emphasis"
+    },
+    {
+      "id": "content-brain",
+      "from": "content",
+      "to": "brain",
+      "label": "素养内容包",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 20
+    },
+    {
+      "id": "brain-orch",
+      "from": "brain",
+      "to": "orch",
+      "label": "DSL",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orch-policy",
+      "from": "orch",
+      "to": "policy",
+      "label": "命令槽",
+      "variant": "emphasis"
+    },
+    {
+      "id": "policy-sim",
+      "from": "policy",
+      "to": "sim",
+      "label": "动作执行（现在）",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "sim-phys",
+      "from": "sim",
+      "to": "phys",
+      "label": "sim2real 移植",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "phys-body",
+      "from": "phys",
+      "to": "body",
+      "label": "驱动",
+      "variant": "emphasis",
+      "labelDy": 20
+    },
+    {
+      "id": "ref-fit",
+      "from": "ref",
+      "to": "fit",
+      "label": "参考",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fit-train",
+      "from": "fit",
+      "to": "train",
+      "label": "多项式",
+      "variant": "emphasis"
+    },
+    {
+      "id": "train-export",
+      "from": "train",
+      "to": "export",
+      "label": "策略",
+      "variant": "emphasis"
+    },
+    {
+      "id": "export-gate",
+      "from": "export",
+      "to": "gate",
+      "label": "ONNX",
+      "variant": "emphasis"
+    },
+    {
+      "id": "gate-train",
+      "from": "gate",
+      "to": "train",
+      "label": "不达标 → 修复重训",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "top"
+    },
+    {
+      "id": "gate-policy",
+      "from": "gate",
+      "to": "policy",
+      "label": "达标 → 回注",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "sim-gate",
+      "from": "sim",
+      "to": "gate",
+      "label": "验收实证",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 48
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "现在 · 质量闸门实证",
+      "items": [
+        "joystick 150M 验收 0/20：学到站住 → 不签收",
+        "Codex 审计 + trace3 守恒签收 · 官方走路基线可用"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "M0 · 共创会 2026-09",
+      "items": [
+        "三张报价单（PCB/模具/舵机）· 共创书",
+        "设计 or 代工决策"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "M1 · 验证 2026-10",
+      "items": [
+        "极客意向 ≥200 · 家长访谈 N=30",
+        "standing 重训达标（可站可走）· 融资启动"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "M2 · 原型 2027-01",
+      "items": [
+        "10 台可走 · 载板点亮 · 踢球重训",
+        "500h 耐久 · 走路切自训（达标后）"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "M3 → M4 · 预售与交付",
+      "items": [
+        "2027-03 ≥200 锁单 · 量产爬坡 · 内容 1.0",
+        "2027-09 退货 <5% · 技能市场 MVP"
+      ]
+    }
+  ]
+}
