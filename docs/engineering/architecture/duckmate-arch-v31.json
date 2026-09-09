@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "DuckMate 架构与当前进展",
+    "locale": "zh-CN",
+    "output": "duckmate-architecture-v31.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "家庭 / 极客",
+      "sublabel": "中文指令 · 摄像头画面",
+      "pos": [
+        30,
+        225
+      ],
+      "size": [
+        120,
+        64
+      ],
+      "tag": "L1 极客 → L2 家庭"
+    },
+    {
+      "id": "brain",
+      "type": "backend",
+      "label": "认知层",
+      "sublabel": "duck_commander · duck_vision",
+      "pos": [
+        230,
+        225
+      ],
+      "size": [
+        150,
+        68
+      ],
+      "tag": "LLM 意图→DSL · 视觉证据回传"
+    },
+    {
+      "id": "content",
+      "type": "database",
+      "label": "内容层",
+      "sublabel": "AI 素养金字塔",
+      "pos": [
+        230,
+        70
+      ],
+      "size": [
+        150,
+        62
+      ],
+      "tag": "人格 / 互动 / 学习 / 创造"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "编排层",
+      "sublabel": "duck_orchestrator",
+      "pos": [
+        450,
+        225
+      ],
+      "size": [
+        140,
+        66
+      ],
+      "tag": "7 原子 × 4 组合 · 技能热加载"
+    },
+    {
+      "id": "policy",
+      "type": "database",
+      "label": "策略层",
+      "sublabel": "ONNX 技能库",
+      "pos": [
+        660,
+        225
+      ],
+      "size": [
+        150,
+        68
+      ],
+      "tag": "官方行走基线现成 · 自训技能重训中"
+    },
+    {
+      "id": "sim",
+      "type": "external",
+      "label": "MuJoCo 验证",
+      "sublabel": "仿真域",
+      "pos": [
+        870,
+        100
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "tag": "当前主力验证"
+    },
+    {
+      "id": "duck",
+      "type": "external",
+      "label": "DuckMate 真机",
+      "sublabel": "42cm · 14×STS3215",
+      "pos": [
+        870,
+        390
+      ],
+      "size": [
+        140,
+        66
+      ],
+      "tag": "树莓派 · IMU · rustypot.feetech"
+    },
+    {
+      "id": "train",
+      "type": "cloud",
+      "label": "RL 训练轨",
+      "sublabel": "mujoco_playground PPO",
+      "pos": [
+        450,
+        470
+      ],
+      "size": [
+        150,
+        66
+      ],
+      "tag": "AutoDL 4090 · 150M 已训"
+    },
+    {
+      "id": "gate",
+      "type": "security",
+      "label": "质量闸门",
+      "sublabel": "验收 · 审计 · trace 证据",
+      "pos": [
+        660,
+        470
+      ],
+      "size": [
+        150,
+        66
+      ],
+      "tag": "学到站住 ≠ 完成"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "DuckMate AI 栈（内容 + 认知 + 编排 + 策略）",
+      "wraps": [
+        "brain",
+        "content",
+        "orch",
+        "policy"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "训练与质量闭环（不达标不放行）",
+      "wraps": [
+        "train",
+        "gate"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "被控对象：仿真 → 真机",
+      "wraps": [
+        "sim",
+        "duck"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "user-brain",
+      "from": "user",
+      "to": "brain",
+      "label": "指令 / 画面",
+      "variant": "emphasis"
+    },
+    {
+      "id": "content-brain",
+      "from": "content",
+      "to": "brain",
+      "label": "素养内容包",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    },
+    {
+      "id": "brain-orch",
+      "from": "brain",
+      "to": "orch",
+      "label": "DSL 下发",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orch-policy",
+      "from": "orch",
+      "to": "policy",
+      "label": "命令槽 cmd",
+      "variant": "emphasis"
+    },
+    {
+      "id": "policy-sim",
+      "from": "policy",
+      "to": "sim",
+      "label": "动作执行（现在）",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "left"
+    },
+    {
+      "id": "sim-duck",
+      "from": "sim",
+      "to": "duck",
+      "label": "sim2real 移植",
+      "variant": "dashed",
+      "labelDy": 40
+    },
+    {
+      "id": "train-gate",
+      "from": "train",
+      "to": "gate",
+      "label": "训练产物 → 验收",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "labelDy": 16
+    },
+    {
+      "id": "gate-policy",
+      "from": "gate",
+      "to": "policy",
+      "label": "验收达标 → 回注",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "gate-train",
+      "from": "gate",
+      "to": "train",
+      "label": "不达标 → 修复重训",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "top",
+      "labelDy": -34
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "现在 · 质量闸门实证",
+      "items": [
+        "joystick 150M 验收 0/20：学到站住非行走",
+        "不签收 → Codex 审计 + trace 守恒闭环（3823 样本零差）",
+        "虚拟栈 80% 跑通 · 官方行走基线可用"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "近期 · 修复重训",
+      "items": [
+        "修复方案已出（等 Codex 裁决）· gate 定义升级：可站可走",
+        "原生/ONNX 对齐 ≥100 组 · M1 共创验证 N=200",
+        "参考直线数据重建（b 方向）"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "2027-01 · M2 原型",
+      "items": [
+        "10 台可走 · 结构件组装 · 载板点亮",
+        "踢球策略重训 · 500h 耐久",
+        "走路用官方基线 / 自训达标后切换"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "2027-09 · M4 交付",
+      "items": [
+        "交付 + 内容 1.0 · 技能市场 MVP",
+        "C 端底线 <¥1,800 · 毛利 31-42%",
+        "用户质量闭环（退货 <5%）"
+      ]
+    }
+  ]
+}
