@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>决策核 · 把「该干什么」做成选择题 | DuckMate 决策层离线实验</title>
+<style>
+  :root{
+    --ink:#111418; --ink-2:#3d444c; --ink-3:#565e68;
+    --paper:#f4f5f6; --card:#ffffff; --line:#d8dce1;
+    --accent:#0e6b5c; --accent-2:#8a4b0f;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .chart{display:flex;flex-direction:column;gap:18px;margin-top:4px}
+  .row .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;color:var(--ink-2);margin-bottom:7px}
+  .row .rhead b{font:700 15px/1 var(--mono);color:var(--ink)}
+  .track{height:12px;background:#e6e9ec;border-radius:2px;overflow:hidden}
+  .fill{height:100%;width:var(--w);background:#8b929a;transform-origin:left center;animation:grow .7s cubic-bezier(.22,.61,.36,1) both}
+  .fill.good{background:var(--accent)}
+  .fill.warn{background:var(--accent-2)}
+  .row .rcap{font:12.5px/1.6 var(--mono);color:var(--ink-3);margin-top:6px;word-break:break-word}
+  @media (prefers-reduced-motion:reduce){.fill{animation:none}}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:32px 32px,32px 32px; background-position:-1px -1px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 24px 96px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:28px}
+  .kicker{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:clamp(30px,5vw,48px);line-height:1.18;margin:14px 0 10px;letter-spacing:-.02em}
+  .sub{color:var(--ink-2);max-width:62ch}
+  .thesis{margin:34px 0 0;padding:20px 22px;background:var(--card);border-left:4px solid var(--accent)}
+  .thesis b{color:var(--accent)}
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:36px 0}
+  .num{background:var(--card);padding:18px 20px;border:1px solid var(--line)}
+  .num .v{font:700 clamp(26px,3.6vw,36px)/1 var(--mono);letter-spacing:-.02em}
+  .num .k{font-size:12.5px;color:var(--ink-3);margin-top:8px;line-height:1.5}
+  h2{font-size:22px;margin:56px 0 6px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:12px}
+  h2 i{font:600 12px/1 var(--mono);color:var(--accent);letter-spacing:.1em;font-style:normal}
+  h3{font-size:17px;margin:28px 0 4px}
+  p{margin:12px 0}
+  small,.small{color:var(--ink-3);font-size:13.5px}
+  figure{margin:26px 0 8px;background:var(--card);border:1px solid var(--line);padding:20px 20px 12px}
+  figcaption{color:var(--ink-3);font-size:13px;margin-top:10px}
+  code{font-family:var(--mono);font-size:13.5px;background:#eceef0;padding:2px 6px;border-radius:2px}
+  pre{background:#14181c;color:#e6e9ec;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.7}
+  pre b{color:#7fd6c1;font-weight:600}
+  ul{padding-left:22px}
+  li{margin:7px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+  .cell{background:var(--card);border:1px solid var(--line);padding:18px 20px}
+  .cell h3{margin-top:0}
+  .flag{color:var(--accent-2);font-weight:600}
+  .ok{color:var(--accent);font-weight:600}
+  footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13.5px}
+  a{color:var(--accent);text-underline-offset:3px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">DuckMate 决策层 · 离线实验报告</div>
+  <h1>把「该干什么」做成选择题</h1>
+  <p class="sub">12 个场景 × 15 个候选，全部在 MuJoCo 里真跑。两版口径对照，三条结论落地成规范。<br>
+  <span class="small">数据：<code>results/matrix_typed.json</code> · <code>results/eval_v2.json</code> · <code>results/head_pipeline.json</code> · 装置：<code>projects/duck-choice-lab/</code></span></p>
+</header>
+
+<div class="thesis">
+  <b>一句话结论</b>：承重柱不是选择器，是<strong>评价函数</strong>。判据口径一松，「走过去把球推走」会被记成踢球成功；
+  口径一严，「单步选择题覆盖不到」的真实比例就从 10% 涨到 <b>33%</b>。<br>
+  <span class="small">所以顺序是反的：先修判据，再谈训练选择器。「以上都不是」不是兜底，是第一等公民。</span>
+</div>
+
+<div class="nums">
+  <div class="num"><div class="v">15 → 10.4</div><div class="k">候选枚举 / 剪枝后适用（机器人的选项是展开成时间的轨迹，不是"技能"）</div></div>
+  <div class="num"><div class="v">50% → 67%</div><div class="k">规则分流通过率（三处离线修后，正好打到 oracle 上界 67%）</div></div>
+  <div class="num"><div class="v">33%</div><div class="k">必须升级（弃权）比例，严格口径下；宽松口径只有 10%</div></div>
+  <div class="num"><div class="v">124 ms</div><div class="k">单候选离线评估；全枚举在线搜索比 20 ms 控制周期慢 65 到 110 倍</div></div>
+</div>
+
+<h2><i>01</i>为什么「28」不是常数</h2>
+<p>候选的原子单位不是技能名，而是 <code>(技能, 参数桶, 时长)</code>。同一个 <code>walk</code> 走 1.5 秒和 3 秒是两个不同的选项，
+成功与否也不一样。所以候选集是<strong>数出来的</strong>，不是给定的：本装置里枚举出 15 个，按上下文剪枝后平均 10.4 个可用。</p>
+<p>这决定了我们真正的约束：不在输出侧（模型能吐多少种选项），而在<strong>输入侧</strong>（物理能不能执行、离线能不能评分）。
+照搬别人的选项数上限，是无意义的刻度。</p>
+
+<h2><i>02</i>三条实测结果</h2>
+
+<figure>
+  <div class="chart">
+    <div class="row">
+      <div class="rhead"><span>踢球场景：判定为「成功」的候选 · 宽松口径（球位移）</span><b>6 类</b></div>
+      <div class="track"><div class="fill" style="--w:100%"></div></div>
+      <div class="rcap">walk_0.3 · walk_0.5 · walk_0.8 · kick_left · kick_right · walk_and_kick</div>
+    </div>
+    <div class="row">
+      <div class="rhead"><span>类型化口径 + 冲量判据（球速 − 鸭速 ≥ 0.5 m/s）</span><b>1 类</b></div>
+      <div class="track"><div class="fill good" style="--w:17%"></div></div>
+      <div class="rcap">kick_left</div>
+    </div>
+  </div>
+  <figcaption>同一批真 rollout，只换判据口径。上条灰色为被误判的候选（推球与真踢不可分），下条绿色为真通过者。右脚踢球场景同构，收敛到 kick_right。</figcaption>
+</figure>
+
+<figure>
+  <div class="chart">
+    <div class="row">
+      <div class="rhead"><span>v1 宽松口径</span><b>10%</b></div>
+      <div class="track"><div class="fill" style="--w:10%"></div></div>
+      <div class="rcap">1 / 12 场景必须升级</div>
+    </div>
+    <div class="row">
+      <div class="rhead"><span>v2 类型化口径</span><b>33%</b></div>
+      <div class="track"><div class="fill warn" style="--w:33%"></div></div>
+      <div class="rcap">4 / 12 场景必须升级：前提缺失 2 · 单技能窗口做不到 1 · 技能库无此能力 1</div>
+    </div>
+  </div>
+  <figcaption>口径越严，暴露的「单步选择题覆盖不到」越多。这里的 10% 是假低，不是覆盖率。</figcaption>
+</figure>
+
+<div class="grid2">
+  <div class="cell">
+    <h3>规则层：三处离线修</h3>
+    <ul class="small">
+      <li>同义词表：<code>打个招呼</code> 不再掉到 <code>stand</code></li>
+      <li>去掉未声明意图：说「坐下」不再自动追加站起</li>
+      <li>补关键词洞：滑 / 翻 / 张望；具名技能优先于泛化「走」</li>
+    </ul>
+    <p class="small">通过率 6/12 → <span class="ok">8/12</span>，与 oracle 上界持平。</p>
+  </div>
+  <div class="cell">
+    <h3>弃权线：判据只依赖状态与目标</h3>
+    <ul class="small">
+      <li><b>前提缺失</b>：坐姿起步 × 目标需要站立能力 → 交长程规划插 <code>standup</code></li>
+      <li><b>闭环接近</b>：球在 0.25 m 射程外 → 需要「接近→对准→踢」</li>
+      <li><b>能力缺失</b>：技能库里没有该类型（例：转向）</li>
+    </ul>
+    <p class="small">触发 4 次，召回 <span class="ok">4/4</span>，精确 <span class="ok">4/4</span>（零误报）。</p>
+  </div>
+</div>
+
+<h2><i>03</i>两次事故，两条纪律</h2>
+<div class="grid2">
+  <div class="cell">
+    <h3>装置里的非物理自由度</h3>
+    <p><code>cmd_kick(place_ball=True)</code> 会把球<strong>瞬移</strong>到脚边，踢球候选白拿分。关掉后 <code>approach_kick</code> 从
+    <span class="ok">✅ 分离 0.674 m</span> 变成 <span class="flag">❌ 分离 −1.002 m</span>。</p>
+    <p class="small">纪律：离线实验必须先声明装置里有没有非物理自由度；诚实口径开关 <code>DUCK_NO_TELEPORT=1</code>。</p>
+  </div>
+  <div class="cell">
+    <h3>被吞掉的异常 = 假阴性</h3>
+    <p>回调里引用了无球场景不存在的属性 → 首跑打出「除踢球外全部 ✗」，看起来像结论，其实是装置坏了。</p>
+    <p class="small">纪律：<code>except</code> 必须留下原因并统计异常计数；<strong>计数 &gt; 0 先修装置，再读结论</strong>。
+    「全是负结果」的第一假设是装置故障。</p>
+  </div>
+</div>
+
+<h2><i>04</i>落地成三件规范</h2>
+<p>吸收外部框架的判据是<strong>可检验的构件</strong>，不是可复述的词汇。逐件过完净增长，只有三件是真的：
+<strong>① 候选带类型标签 ② 决策层弃权出口 ③ 判据先于选择器</strong>。其余（分层词汇、选项数上限、置信度闸门）在现有六层栈里已有同构物，净增长为零。</p>
+<p>三件已写成草案：<a href="docs/decision-layer-spec.md">docs/decision-layer-spec.md</a>，每条判据都挂实测数字与反例，附六项验收清单。</p>
+
+<h2><i>05</i>下一步与成本口径</h2>
+<ul>
+  <li><strong>在线不可枚举</strong>：全枚举 1.3 到 2.2 秒/决策，控制周期 20 ms ⇒ 离线造矩阵、在线小头一次前向（&lt; 5 ms）。</li>
+  <li><strong>数据集成本</strong>：1 万状态 × 约 10 个适用候选 = 10 万次 rollout ≈ 单核 3.4 h / 8 核 0.4 h / GPU（64 并行）0.1 h。</li>
+  <li><strong>诚实边界</strong>：27 个训练样本下，小头留出集 top-1 命中 1/5，规则 5/5。此轮只证明<em>管道通、成本可负担</em>，不足以判定「选择头」路线优劣。</li>
+</ul>
+
+<h2><i>06</i>复现</h2>
+<pre>cd projects/duck-choice-lab
+<b>DUCK_NO_TELEPORT=1 python3 lab_typed.py</b>      # 12 场景 × 15 候选类型化矩阵（约 30 s）
+<b>python3 eval_v2.py</b>                          # 规则 v2 + 弃权线评分（纯离线，无仿真）
+<b>DUCK_DRAWS=3 DUCK_NO_TELEPORT=1 python3 head_pipeline.py</b>   # 随机状态数据集 + 迷你选择头</pre>
+<p class="small">仿真依赖 <code>/tmp/duck_sim</code>（易失，重启后从 <code>archive/microduck-rl-fork</code> 重建）与 <code>/tmp/duck_policies</code>（9 个 ONNX）。</p>
+
+<footer>
+  DuckMate 决策层离线实验 · v1（10 场景 × 15 候选，150 次 rollout，28.6 s）与 v2（12 场景 × 15 候选，180 次 rollout，29.2 s；数据集 36 状态 × 15 候选 = 540 次 rollout，66.9 s）<br>
+  报告：<code>projects/duck-choice-lab/results/REPORT.md</code> · 规范草案：<code>docs/decision-layer-spec.md</code> · 2026-09-19
+</footer>
+
+</div>
+</body>
+</html>
